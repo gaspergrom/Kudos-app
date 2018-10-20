@@ -13,7 +13,7 @@ router.router.post('/' + pluralName + '/:id/departments', async (req, res) => {
     if (req && req.params && req.body && req.params.id) {
         const id = req.params.id;
         let company = await CompanyModel.findById(id);
-        
+
         if (company) {
             if (req.body.title)
                 req.body.slug = slugify(req.body.title);
@@ -28,7 +28,7 @@ router.router.post('/' + pluralName + '/:id/departments', async (req, res) => {
                     CompanyModel.findByIdAndUpdate(id, company, (err, original) => {
                         if (err)
                             console.error('Failed to update company ID \'' + id + '\' with department: ' + err);
-                        
+
                         res.json(company);
                     });
                 }
@@ -49,7 +49,7 @@ router.router.get('/' + pluralName + '/:id/employees', (req, res) => {
         const id = req.params.id;
 
         EmployeeModel
-            .find({ company: id })
+            .find({company: id})
             .populate('departments')
             .exec((err, filtered) => {
                 if (err)

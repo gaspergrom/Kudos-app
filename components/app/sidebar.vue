@@ -23,14 +23,24 @@
                         <i class="c-sidebar__icon feather icon-tag"></i>Tasks
                     </nuxt-link>
                 </li>
-                <li>
-                    <nuxt-link class="c-sidebar__link" to="/statistics" active-class="is-active" exact>
+                <li class="c-sidebar__item has-submenu">
+                    <a class="c-sidebar__link" @click="statistics=!statistics">
                         <i class="c-sidebar__icon feather icon-bar-chart-2"></i>Statistics
-                    </nuxt-link>
+                    </a>
+                    <ul class="c-sidebar__list " :class="{'collapse': statistics}">
+                        <li><nuxt-link to="/statistics" class="c-sidebar__link" href="#">Overview</nuxt-link></li>
+                        <li><a class="c-sidebar__link" href="#">Kudos</a></li>
+                        <li><a class="c-sidebar__link" href="#">Tasks</a></li>
+                    </ul>
                 </li>
                 <li>
                     <nuxt-link class="c-sidebar__link" to="/shop" active-class="is-active" exact>
                         <i class="c-sidebar__icon feather icon-shopping-cart"></i>Gift shop
+                    </nuxt-link>
+                </li>
+                <li>
+                    <nuxt-link class="c-sidebar__link" to="/shop/redeems" active-class="is-active" exact>
+                        <i class="c-sidebar__icon feather icon-credit-card"></i>Redeems
                     </nuxt-link>
                 </li>
                 <li>
@@ -52,10 +62,10 @@
                         <i class="c-sidebar__icon feather icon-bookmark"></i>Departments
                     </nuxt-link>
                 </li>
-                <li v-for="(department, slug) of $store.state.companies.departments">
-                    <nuxt-link class="c-sidebar__link" :to="`/company/department/${department.slug}`"
+                <li v-for="department of $store.state.companies.departments">
+                    <nuxt-link class="c-sidebar__link" :to="`/company/department/${department._id}`"
                                active-class="is-active" exact>
-                        <i class="c-sidebar__icon feather icon-user"></i>{{department.name}}
+                        <i class="c-sidebar__icon feather icon-user"></i>{{department.title}}
                     </nuxt-link>
                 </li>
 
@@ -70,7 +80,12 @@
 
 <script>
     export default {
-        name: "app-sidebar"
+        name: "app-sidebar",
+        data: function () {
+            return {
+                statistics: false,
+            }
+        }
     }
 </script>
 

@@ -6,9 +6,7 @@
             </div>
         </div>
         <div class="row">
-            <statistics-leaderboard></statistics-leaderboard>
-            <statistics-departments></statistics-departments>
-            <statistics-transactions></statistics-transactions>
+
         </div>
     </div>
 </template>

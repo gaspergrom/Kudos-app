@@ -3,7 +3,7 @@
         <h4>Recent activity</h4>
         <br>
         <div class="o-line u-pb-small u-mb-small u-border-bottom"
-             v-for="activity in $store.state.activity.activity.slice(Math.max($store.state.activity.activity.length - 5, 0), 5)">
+             v-for="activity in $store.state.activity.activity.slice(0, 5)">
             <div class="o-media">
                 <div class="o-media__img u-mr-small">
                     <div class="c-avatar c-avatar--xsmall">

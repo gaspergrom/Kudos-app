@@ -18,6 +18,20 @@
             <div class="col-md-12" v-if="$store.state.companies.employees.length===0">
                 <h2 class="text-center pb20">No members</h2>
             </div>
+            <div class="col-sm-6 col-xl-3">
+
+                <nuxt-link :to="`/user`" class="c-card is-animated u-text-center" style="display: block;">
+                    <div class="c-avatar u-inline-flex u-mb-small">
+                        <img class="c-avatar__img" :src="$store.state.user.picture" alt="Clark">
+                    </div>
+                    <h4>{{$store.state.user.name}}</h4>
+                    <p class="u-pb-small u-mb-small u-border-bottom">You</p>
+
+                    <p class="u-h4">
+                        {{$store.state.user.receivedKudos}} kudos
+                    </p>
+                </nuxt-link>
+            </div>
             <div class="col-sm-6 col-xl-3" v-for="member of members">
 
                 <nuxt-link :to="`/user/${member._id}`" class="c-card is-animated u-text-center" style="display: block;">

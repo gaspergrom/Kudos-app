@@ -14,8 +14,8 @@
                 <h2 class="text-center">You don't have any departments yet</h2>
             </div>
             <div class="col-sm-6 col-xl-3" v-for="department of $store.state.companies.departments">
-                <nuxt-link :to="`/company/department/${department.slug}`" class="c-card is-animated u-text-center">
-                    <h4>{{departments.title}}</h4>
+                <nuxt-link :to="`/company/department/${department._id}`" class="c-card is-animated u-text-center block">
+                    <h4>{{department.title}}</h4>
                     <p>150 members</p>
                 </nuxt-link>
             </div>
