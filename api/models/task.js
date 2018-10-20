@@ -13,18 +13,6 @@ const kudosRequestSchema = new mongoose.Schema({
         type: EmployeeModel.schema,
         ref: 'employee'
     },
-    offeredToDepartments: [
-        {
-            type: DepartmentModel.schema,
-            ref: 'department'
-        }
-    ],
-    offeredToEmployees: [
-        {
-            type: EmployeeModel.schema,
-            ref: 'employee'
-        }
-    ],
     assignedTo: {
         type: EmployeeModel.schema,
         ref: 'employee'
