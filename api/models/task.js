@@ -11,6 +11,12 @@ const kudosRequestSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'employee'
     },
+    offeredTo: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'employee'
+        }
+    ],
     assignedTo: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'employee'
