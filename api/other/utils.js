@@ -1,4 +1,5 @@
 const
+    slugify = require('slugify'),
     conf = require('../../nuxt.config'),
     rp = require('request-promise'),
     companyRouter = require('../routes/database-models/companies'),
@@ -36,14 +37,6 @@ module.exports = {
      */
     constructTeamInfoRequestUrl: function (userToken) {
         return conf.uris.slackTeamInfoUrl + '?token=' + userToken + '&pretty=1';
-    },
-
-    /**
-     * Returns a slug name from a full name
-     * @param {*} name Full name of the entity
-     */
-    generateSlug: function (name) {
-        return name.trim().replace(' ', '_').toLowerCase();
     },
 
     /**
@@ -131,7 +124,7 @@ module.exports = {
         company = {
             slackId: slackTeamData.id,
             title: slackTeamData.name,
-            slug: this.generateSlug(slackTeamData.name),
+            slug: slugify(slackTeamData.name),
             departments: []
         };
 

@@ -1,4 +1,5 @@
 const
+    slugify = require('slugify'),
     CompanyModel = require('../../models/company'),
     EmployeeModel = require('../../models/employee'),
     DepartmentModel = require('../../models/department'),
@@ -14,8 +15,8 @@ router.router.post('/' + pluralName + '/:id/departments', async (req, res) => {
         let company = await CompanyModel.findById(id);
         
         if (company) {
-            // if (req.body.title)
-            //     req.body.slug = Utils.generateSlug(req.body.title);
+            if (req.body.title)
+                req.body.slug = slugify(req.body.title);
 
             DepartmentModel.create(req.body, (err, added) => {
                 if (err) {

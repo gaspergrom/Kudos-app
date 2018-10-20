@@ -1,4 +1,6 @@
-const { Router } = require('express');
+const
+    slugify = require('slugify'),
+    { Router } = require('express');
 
 module.exports = class BaseRouter {
     constructor(name, pluralName, populateFields, advanced) {
@@ -95,6 +97,9 @@ module.exports = class BaseRouter {
             this.router.post('/' + this.baseRoute, (req, res) => {
                 if (req.body) {
                     req.body.date = new Date().getTime();
+
+                    if (req.body.title || req.body.name)
+                        req.body.slug = req.body.title ? slugify(req.body.title) : slugify(req.body.name);
     
                     this.baseClass.create(req.body, (err, added) => {
                         if (err)
@@ -124,6 +129,9 @@ module.exports = class BaseRouter {
                 if (req.body) {
                     const id = req.params.id;
                     let data = this.baseClass.findByIdAndUpdate(req.params.id, req.body, { upsert: false });
+                    
+                    if (req.body.title || req.body.name)
+                        req.body.slug = req.body.title ? slugify(req.body.title) : slugify(req.body.name);
 
                     if (populateFields)
                         for (let i in populateFields)
