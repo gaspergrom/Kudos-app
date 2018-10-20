@@ -33,6 +33,11 @@
                         <i class="c-sidebar__icon feather icon-shopping-cart"></i>Gift shop
                     </nuxt-link>
                 </li>
+                <li>
+                    <nuxt-link class="c-sidebar__link" to="/maketeam" active-class="is-active" exact>
+                        <i class="c-sidebar__icon feather icon-users"></i>Make team
+                    </nuxt-link>
+                </li>
             </ul>
             <span class="c-sidebar__title">{{$store.state.companies.name}}</span>
             <ul class="c-sidebar__list">

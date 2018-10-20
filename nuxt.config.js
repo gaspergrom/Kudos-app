@@ -2,7 +2,6 @@ module.exports = {
     /*
       ** Headers of the page
       */
-    mode: "spa",
     head: {
         title: 'Kudos App',
         meta: [
@@ -18,7 +17,7 @@ module.exports = {
     /*
       ** Global CSS
       */
-    css: ['~/assets/css/main.scss'],
+    css: ['~/assets/css/style.css'],
     /*
       ** Add axios globally
       */
@@ -49,8 +48,8 @@ module.exports = {
         }
     },
     databaseConfig: {
-        url: 'mongodb://127.0.0.1:27017'
-        // url: 'mongodb://ds237373.mlab.com:37373/heroku_w4phfnbf'
+         url: 'mongodb://127.0.0.1:27017'
+        //url: 'mongodb://ds237373.mlab.com:37373/heroku_w4phfnbf'
     },
     uris: {
         slackIdentityUrl: 'https://slack.com/api/users.identity',
