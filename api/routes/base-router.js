@@ -1,7 +1,7 @@
 const { Router } = require('express');
 
 module.exports = class BaseRouter {
-    constructor(name, pluralName, router) {
+    constructor(name, pluralName, advanced) {
         this.baseClass = require('../models/' + name);
         this.tag = name;
         this.baseRoute = pluralName;
@@ -13,7 +13,7 @@ module.exports = class BaseRouter {
             'patch': (original) => { } // params: the original entry before edit,
         };
 
-        this.sortRoutes();
+        this.sortRoutes(advanced);
     }
 
     /**
@@ -43,7 +43,7 @@ module.exports = class BaseRouter {
     /**
      * Configures all the router routes
      */
-    sortRoutes() {
+    sortRoutes(advanced) {
         /**
          * GET - returns all entries of a schema in the database
          * ## returns: all entries in the database of a specific type
@@ -80,24 +80,26 @@ module.exports = class BaseRouter {
          * @ req.body (Object) - the filled schema of a model to add to the database
          * ## returns: the newly added entry if successful or an empty response if not
          */
-        this.router.post('/' + this.baseRoute, (req, res) => {
-            if (req.body) {
-                req.body.date = new Date().getTime();
-
-                this.baseClass.create(req.body, (err, added) => {
-                    if (err)
-                        console.error('Error when adding new \'' + this.tag + '\': ' + err);
-                    else {
-                        console.log('Added a \'' + this.tag + '\'.');
-                        this.emitEvent('post', added);
-                    }
-                    
-                    res.json(added);
-                });
-            }
-            else
-                res.json();
-        });
+        if (advanced !== false) {
+            this.router.post('/' + this.baseRoute, (req, res) => {
+                if (req.body) {
+                    req.body.date = new Date().getTime();
+    
+                    this.baseClass.create(req.body, (err, added) => {
+                        if (err)
+                            console.error('Error when adding new \'' + this.tag + '\': ' + err);
+                        else {
+                            console.log('Added a \'' + this.tag + '\'.');
+                            this.emitEvent('post', added);
+                        }
+                        
+                        res.json(added);
+                    });
+                }
+                else
+                    res.json();
+            });
+        }
 
         /**
          * PATCH - updates an entry in the database
@@ -106,24 +108,26 @@ module.exports = class BaseRouter {
          * @ req.body (Object): an object with the properties to update
          * ## returns: the original (unedited) entry if successful or an empty response if not
          */
-        this.router.patch('/' + this.baseRoute + '/:id', (req, res) => {
-            if (req.body) {
-                const id = req.params.id;
-
-                this.baseClass.findByIdAndUpdate(req.params.id, req.body, { upsert: false }, (err, original) => {
-                    if (err)
-                        console.error('Error when patching \'' + this.tag + '\' ID ' + id + ' - problem when updating.');
-                    else {
-                        console.log('Updated a \'' + this.tag + '\' ID ' + id);
-                        this.emitEvent('patch', original);
-                    }
-
-                    res.json(original);
-                });
-            }
-            else
-                res.json();
-        });
+        if (advanced !== false) {
+            this.router.patch('/' + this.baseRoute + '/:id', (req, res) => {
+                if (req.body) {
+                    const id = req.params.id;
+    
+                    this.baseClass.findByIdAndUpdate(req.params.id, req.body, { upsert: false }, (err, original) => {
+                        if (err)
+                            console.error('Error when patching \'' + this.tag + '\' ID ' + id + ' - problem when updating.');
+                        else {
+                            console.log('Updated a \'' + this.tag + '\' ID ' + id);
+                            this.emitEvent('patch', original);
+                        }
+    
+                        res.json(original);
+                    });
+                }
+                else
+                    res.json();
+            });
+        }
     
         /**
          * DELETE - deletes an entry from the database
