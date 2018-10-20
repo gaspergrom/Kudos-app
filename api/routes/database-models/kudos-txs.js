@@ -4,7 +4,7 @@ const
     employeeModel = require('../../models/employee'),
     kudosTxModel = require('../../models/kudos-tx'),
     BaseRouter = require('../base-router'),
-    router = new BaseRouter(name, pluralName, false);
+    router = new BaseRouter(name, pluralName, ['from', 'to'], false);
 
 router.setEventListener('post', (added) => {
     console.log('New kudos TX - TODO: notify involved user(s)');

@@ -5,7 +5,7 @@ const
     kudosRedeemModel = require('../../models/kudos-redeem'),
     employeeModel = require('../../models/employee'),
     BaseRouter = require('../base-router'),
-    router = new BaseRouter(name, pluralName, false);
+    router = new BaseRouter(name, pluralName, ['employee'], false);
 
 router.router.get('/' + pluralName + '-options', (req, res) => {
     res.json(conf.redeemOptions);

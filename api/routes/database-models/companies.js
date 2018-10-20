@@ -3,7 +3,7 @@ const
     name = 'company',
     pluralName = 'companies',
     BaseRouter = require('../base-router'),
-    router = new BaseRouter(name, pluralName);
+    router = new BaseRouter(name, pluralName, ['departments']);
 
 /**
  * Returns an array of all employees of the specified company
@@ -11,7 +11,6 @@ const
 router.router.get('/' + pluralName + '/:id/employees', (req, res) => {
     if (req && req.params && req.params.id) {
         const id = req.params.id;
-        console.log(id);
 
         employeeModel
             .find({ company: id })

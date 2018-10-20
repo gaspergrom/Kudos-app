@@ -1,7 +1,7 @@
 const { Router } = require('express');
 
 module.exports = class BaseRouter {
-    constructor(name, pluralName, advanced) {
+    constructor(name, pluralName, populateFields, advanced) {
         this.baseClass = require('../models/' + name);
         this.tag = name;
         this.baseRoute = pluralName;
@@ -13,7 +13,7 @@ module.exports = class BaseRouter {
             'patch': (original) => { } // params: the original entry before edit,
         };
 
-        this.sortRoutes(advanced);
+        this.sortRoutes(populateFields, advanced);
     }
 
     /**
@@ -43,18 +43,24 @@ module.exports = class BaseRouter {
     /**
      * Configures all the router routes
      */
-    sortRoutes(advanced) {
+    sortRoutes(populateFields, advanced) {
         /**
          * GET - returns all entries of a schema in the database
          * ## returns: all entries in the database of a specific type
          */
         this.router.get('/' + this.baseRoute, (req, res) => {
-            this.baseClass.find({}, (err, all) => {
+            let data = this.baseClass.find({});
+
+            if (populateFields)
+                for (let i in populateFields)
+                    data.populate(populateFields[i]);
+            
+            data.exec((err, all) => {
                 if (err)
                     console.error('Error when fetching all \'' + this.baseRoute + '\': ' + err);
     
                 res.json(all);
-            });
+            })
         });
     
         /**
@@ -65,8 +71,13 @@ module.exports = class BaseRouter {
          */
         this.router.get('/' + this.baseRoute + '/:id', (req, res) => {
             const id = req.params.id;
-    
-            this.baseClass.findById(id).exec((err, found) => {
+            let data = this.baseClass.findById(id)
+            
+            if (populateFields)
+                for (let i in populateFields)
+                    data.populate(populateFields[i]);
+            
+            data.exec((err, found) => {
                 if (err)
                     console.error('Error when fetching \'' + this.tag + '\' ID ' + id);
     

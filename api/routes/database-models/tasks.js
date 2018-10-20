@@ -4,7 +4,7 @@ const
     employeeModel = require('../../models/employee'),
     taskModel = require('../../models/task'),
     BaseRouter = require('../base-router'),
-    router = new BaseRouter(name, pluralName, false);
+    router = new BaseRouter(name, pluralName, ['assignedBy', 'assignedTo'], false);
 
 router.router.post('/' + pluralName, async (req, res) => {
     if (req && req.body) {

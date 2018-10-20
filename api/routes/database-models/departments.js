@@ -5,7 +5,7 @@ const
     DepartmentsModel = require('../../models/department'),
     Utils = require('../../other/utils'),
     BaseRouter = require('../base-router'),
-    router = new BaseRouter(name, pluralName, false);
+    router = new BaseRouter(name, pluralName, ['manager'], false);
 
 router.router.post('/' + pluralName, async (req, res) => {
     if (req && req.body) {
