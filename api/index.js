@@ -20,7 +20,8 @@ const
   employees = require('./routes/database-models/employees'),
   departments = require('./routes/database-models/departments'),
   kudosTxs = require('./routes/database-models/kudos-txs'),
-  kudosTasks = require('./routes/database-models/tasks'),
+  kudosTasks = require('./routes/database-models/tasks')
+  kudosRedeems = require('./routes/database-models/kudos-redeems'),
   auth = require('./routes/auth/auth'),
   slackKudos = require('./routes/commands/slack-kudos'),
   events = require('./routes/events/events'),
@@ -32,6 +33,7 @@ app.use(employees.router);
 app.use(departments.router);
 app.use(kudosTxs.router);
 app.use(kudosTasks.router);
+app.use(kudosRedeems.router);
 
 // Import login routes
 app.use(auth);

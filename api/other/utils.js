@@ -134,7 +134,7 @@ module.exports = {
         employee = {
             slackId: slackUserData.id,
             name: slackUserData.name,
-            realName: slackUserData.real_name ? slackUserData.real_name : slackUserData.name, // TODO: če signin z userjem, ne dobiš realName?
+            realName: slackUserData.real_name, // TODO: če signin z userjem, ne dobiš realName?
             imgPaths: this.extractUserProfileImages(slackUserData),
             company: fromCompanyId ? fromCompanyId : null,
             departments: [], // TODO: get employee's departments
