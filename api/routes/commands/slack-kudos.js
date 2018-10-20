@@ -19,7 +19,7 @@ router.post('/commands/kudos', async (req, res) => {
     if (from && to && amount && amount.constructor == Number) {
         if (from.kudosToGive >= amount) {
             msg = 'Sending ' + amount + ' kudos to ' + (to.realName ? to.realName : to.name) + ': ' + comment;
-            attachmentMsg = 'You can give away ' + (from.kudosToGive - amount) + ' more kudos!';
+            attachmentMsg = 'You can give away *' + (from.kudosToGive - amount) + '* more kudos!';
 
             const kudosTx = {
                 from: from._id,
@@ -35,7 +35,7 @@ router.post('/commands/kudos', async (req, res) => {
         }
         else {
             msg = 'You do not have enough kudos available';
-            attachmentMsg =  'You have ' + from.kudosToGive + ' kudos to give away';
+            attachmentMsg =  'You have *' + from.kudosToGive + '* kudos to give away';
         }
     }
     else {
