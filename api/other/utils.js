@@ -59,14 +59,14 @@ module.exports = {
             let employees = [];
     
             if (company == null || company == undefined)
-                company = this.addCompany(teamInfo);
+                company = await this.addCompany(teamInfo);
     
             for (let i in usersList) {
                 const user = usersList[i];
                 let employee = await employeeRouter.baseClass.findOne({ slackId: user.id }).exec();
     
                 if (employee == null || employee == undefined)
-                    employee = this.addEmployee(user, company);
+                    employee = await this.addEmployee(user, company);
                 
                 employees.push(employee);
             }
@@ -98,7 +98,7 @@ module.exports = {
         let company = await companyRouter.baseClass.findOne({ slackId: teamData.id }).exec();
 
         if (employee == null || employee == undefined)
-            employee = this.addEmployee(userData, company);
+            employee = await this.addEmployee(userData, company);
 
         return {
             authType: 'employee',
@@ -113,7 +113,7 @@ module.exports = {
      * Returns the added company
      * @param {*} slackTeamData Slack team data
      */
-    addCompany: function (slackTeamData) {
+    addCompany: async function (slackTeamData) {
         company = {
             slackId: slackTeamData.id,
             title: slackTeamData.name,
@@ -121,7 +121,7 @@ module.exports = {
             departments: []
         };
 
-        this.post(conf.axios.baseURL, companyRouter.baseRoute, company);
+        await this.post(conf.axios.baseURL, companyRouter.baseRoute, company);
         return company;
     },
 
@@ -131,7 +131,7 @@ module.exports = {
      * @param {*} slackUserData Slack user data
      * @param {*} fromCompany The company the user is from
      */
-    addEmployee: function (slackUserData, fromCompany) {
+    addEmployee: async function (slackUserData, fromCompany) {
         employee = {
             slackId: slackUserData.id,
             name: slackUserData.name,
@@ -145,7 +145,7 @@ module.exports = {
             receivedKudos: conf.general.startingReceivedKudos
         };
 
-        this.post(conf.axios.baseURL, employeeRouter.baseRoute, employee);
+        await this.post(conf.axios.baseURL, employeeRouter.baseRoute, employee);
         return employee;
     },
 
@@ -174,8 +174,8 @@ module.exports = {
      * @param {*} uri Route of the request (full uri = baseUrl + uri)
      * @param {*} body The JSON content/body to send
      */
-    post: function (baseUrl, uri, body) {
-        rp({
+    post: async function (baseUrl, uri, body) {
+        await rp({
             method: 'POST',
             baseUrl: baseUrl,
             uri: uri,
