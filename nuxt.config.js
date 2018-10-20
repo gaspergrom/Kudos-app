@@ -88,6 +88,11 @@ module.exports = {
             title: 'Steam 10$ gift card',
             amount: 20,
             imgPath: 'https://i.imgur.com/dqGa70y.png'
+        },
+        {
+            title: 'Udemy 10$ gift card',
+            amount: 20,
+            imgPath: 'https://imgur.com/a/69hLvc7'
         }
     ],
     serverMiddleware: [
