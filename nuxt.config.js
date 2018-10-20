@@ -30,8 +30,8 @@ module.exports = {
     ],
     axios: {
         // See https://github.com/nuxt-community/axios-module#options
-        // baseURL: "http://localhost:3000/api",
-        baseURL: 'https://kudos-app-celtra.herokuapp.com/api',
+        baseURL: "http://localhost:3000/api",
+        // baseURL: 'https://kudos-app-celtra.herokuapp.com/api',
         https: false
     },
     build: {
@@ -49,8 +49,8 @@ module.exports = {
         }
     },
     databaseConfig: {
-        // url: 'mongodb://127.0.0.1:27017'
-        url: 'mongodb://ds237373.mlab.com:37373/heroku_w4phfnbf'
+        url: 'mongodb://127.0.0.1:27017'
+        // url: 'mongodb://ds237373.mlab.com:37373/heroku_w4phfnbf'
     },
     uris: {
         slackIdentityUrl: 'https://slack.com/api/users.identity',
@@ -61,9 +61,23 @@ module.exports = {
     slackWorkspaceData: {
         clientId: '373180051559.455692683652',
         clientSecret: '50afe6cdc4267f22c91f5aea5a5a256a',
-        // redirectUri: 'http://localhost:3000/slack'
-        redirectUri: 'https://kudos-app-celtra.herokuapp.com/slack'
+        redirectUri: 'http://localhost:3000/slack'
+        // redirectUri: 'https://kudos-app-celtra.herokuapp.com/slack'
     },
+    redeemOptions: [
+        {
+            title: 'Amazon 10$ gift card',
+            amount: 100
+        },
+        {
+            title: 'Amazon 20$ gift card',
+            amount: 200
+        },
+        {
+            title: 'Amazon 30$ gift card',
+            amount: 300
+        }
+    ],
     serverMiddleware: [
         // API middleware
         '~/api/index.js'
