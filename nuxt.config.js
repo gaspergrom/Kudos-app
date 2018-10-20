@@ -2,7 +2,6 @@ module.exports = {
     /*
       ** Headers of the page
       */
-    mode: "spa",
     head: {
         title: 'Kudos App',
         meta: [
@@ -18,7 +17,7 @@ module.exports = {
     /*
       ** Global CSS
       */
-    css: ['~/assets/css/main.scss'],
+    css: ['~/assets/css/main.css'],
     /*
       ** Add axios globally
       */
