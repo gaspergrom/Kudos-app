@@ -14,6 +14,8 @@
 <script>
     import AppHeader from "../components/app/header";
     import AppSidebar from "../components/app/sidebar";
+    import Cookies from "js-cookie";
+
     export default {
         components: {AppSidebar, AppHeader},
         data: function () {
@@ -21,16 +23,43 @@
                 open: false
             }
         },
-        created(){
-            /*if(this.$store.state.auth.userId==null){
-                let userId=Cookies.get("userId");
-                if(userId){
-                    this.$store.state.auth.userId=userId;
+        created() {
+            if(this.$store.state.auth.teamId == null){
+                let teamId = Cookies.get("teamId");
+                if(teamId){
+                    this.$store.state.auth.teamId = teamId;
+                    this.$axios.get("/companies/" + teamId)
+                        .then((res) => {
+                            console.log(res);
+                            this.$store.state.auth.teamId = res.data._id;
+                            this.$store.state.companies.name = res.data.title;
+                            this.$store.state.companies.slug = res.data.slug;
+                            this.$store.state.companies.departments = res.data.departments;
+                            this.$store.state.companies.employees = res.data.employees;
+                        });
                 }
-                else{
+            }
+            if (this.$store.state.auth.userId == null) {
+                let userId = Cookies.get("userId");
+                if (userId) {
+                    this.$store.state.auth.userId = userId;
+                    this.$axios.get("/employees/" + userId)
+                        .then((res) => {
+                            console.log(res);
+                            this.$store.state.user.name = res.data.name;
+                            this.$store.state.user.picture = res.data.imgPaths;
+                            this.$store.state.user.availableKudos = res.data.availableKudos;
+                            this.$store.state.user.kudosToGive = res.data.kudosToGive;
+                            this.$store.state.user.receivedKudos = res.data.receivedKudos;
+                        })
+                        .catch((err) => {
+                            this.$router.push("/login")
+                        })
+                }
+                else {
                     this.$router.push("/login");
                 }
-            }*/
+            }
         }
     }
 </script>

@@ -26,20 +26,24 @@
                 })
                     .then((res) => {
                         let data = res.data;
-                        console.log(data);
                         if (data.authType === "employee") {
-                            this.$store.state.auth.userID = data.data.employee.slackId;
+                            this.$store.state.auth.userId = data.data.employee._id;
                             this.$store.state.user.name = data.data.employee.name;
+                            this.$store.state.user.picture = data.data.employee.imgPaths;
                             this.$store.state.user.availableKudos = data.data.employee.availableKudos;
                             this.$store.state.user.kudosToGive = data.data.employee.kudosToGive;
                             this.$store.state.user.receivedKudos = data.data.employee.receivedKudos;
-                            Cookies.set("employees", data);
-                            Cookies.set("userId", data.data.employee.slackId);
+                            Cookies.set("userId", data.data.employee._id);
                         }
-                        else if (data.authType === "workspace") {
-
+                        else if (data.authType === "company") {
+                            this.$store.state.auth.teamId = data.data.company._id;
+                            this.$store.state.companies.name = data.data.company.title;
+                            this.$store.state.companies.slug = data.data.company.slug;
+                            this.$store.state.companies.departments = data.data.company.departments;
+                            this.$store.state.companies.employees = data.data.employees;
+                            Cookies.set("teamId", data.data.company._id);
                         }
-                        //this.$router.push("/");
+                        this.$router.push("/");
                     })
             }
         }

@@ -24,7 +24,17 @@
 </template>
 
 <script>
-    export default {}
+    export default {
+        created(){
+            this.$axios.get("/redeem-kudos")
+                .then((res)=>{
+                    console.log(res);
+                })
+                .catch((err)=>{
+                    console.log(err);
+                })
+        }
+    }
 </script>
 
 <style scoped>
