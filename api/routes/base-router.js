@@ -1,7 +1,7 @@
 const { Router } = require('express');
 
 module.exports = class BaseRouter {
-    constructor(name, pluralName) {
+    constructor(name, pluralName, router) {
         this.baseClass = require('../models/' + name);
         this.tag = name;
         this.baseRoute = pluralName;
@@ -10,7 +10,8 @@ module.exports = class BaseRouter {
         this.eventListeners = {
             'post': (added) => { }, // params: the newly added entry
             'delete': (deleted) => { }, // params: the deleted entry
-            'patch': (original) => { } // params: the original entry before edit
+            'patch': (original) => { }, // params: the original entry before edit,
+            'query': (reqRes) => { reqRes.res.json(); } // whenever a query is passed to the GET route
         };
 
         this.sortRoutes();
@@ -48,13 +49,17 @@ module.exports = class BaseRouter {
          * GET - returns all entries of a schema in the database
          * ## returns: all entries in the database of a specific type
          */
-        this.router.get('/' + this.baseRoute, (req, res, next) => {
-            this.baseClass.find({}, (err, all) => {
-                if (err)
-                    console.error('Error when fetching all \'' + this.baseRoute + '\': ' + err);
-    
-                res.json(all);
-            });
+        this.router.get('/' + this.baseRoute, (req, res) => {
+            if (req.query.constructor === Object && Object.keys(req.query).length > 0)
+                this.emitEvent('query', { req: req, res: res });
+            else {
+                this.baseClass.find({}, (err, all) => {
+                    if (err)
+                        console.error('Error when fetching all \'' + this.baseRoute + '\': ' + err);
+        
+                    res.json(all);
+                });
+            }
         });
     
         /**
