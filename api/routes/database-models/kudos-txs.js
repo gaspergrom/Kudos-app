@@ -10,7 +10,7 @@ router.setEventListener('post', (added) => {
     console.log('New kudos TX - TODO: notify involved user(s)');
 });
 
-router.router.post('/' + pluralName, async (req, res) => {
+processTx = async (req, res) => {
     if (req && req.body) {
         const fromId = req.body.from;
         const toId = req.body.to;
@@ -30,10 +30,13 @@ router.router.post('/' + pluralName, async (req, res) => {
                     date: new Date().getTime()
                 };
     
-                kudosTxModel.create(kudosTx, (err, added) => {
+                kudosTxModel.create(kudosTx, async (err, added) => {
                     if (err)
                         console.error('Failed to process a kudos transaction: ' + err);
                     
+                    await employeeModel.findByIdAndUpdate(fromId, { kudosToGive: from.kudosToGive - amount });
+                    await employeeModel.findByIdAndUpdate(toId, { receivedKudos: to.receivedKudos + amount, availableKudos: to.availableKudos + amount });
+
                     res.json(added);
                 });
             }
@@ -45,6 +48,10 @@ router.router.post('/' + pluralName, async (req, res) => {
     }
     else
         res.json();
+}
+
+router.router.post('/' + pluralName, async (req, res) => {
+    await this.processTx(req, res);
 });
 
 /**
