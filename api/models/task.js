@@ -29,7 +29,7 @@ const kudosRequestSchema = new mongoose.Schema({
             ref: 'employee'
         }
     ],
-    amount: Number,
+    kudosReward: Number,
     title: String,
     comment: String,
     date: Date
