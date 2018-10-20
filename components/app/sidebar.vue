@@ -1,7 +1,7 @@
 <template>
     <aside class="c-sidebar">
         <div class="c-sidebar__brand">
-            Kudos
+            <img src="/logo.png" style="height: 50px;margin-left: -15px;">
         </div>
 
         <!-- Scrollable -->
@@ -63,7 +63,7 @@
         </div>
 
         <div class="c-sidebar__footer">
-            {{$store.state.user.avaliableKudos}} kudos
+            {{$store.state.user.availableKudos}} kudos
         </div>
     </aside>
 </template>

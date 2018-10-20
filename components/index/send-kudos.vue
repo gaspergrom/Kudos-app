@@ -5,17 +5,17 @@
             <div class="row">
                 <div class="col-md-5">
                     <div class="c-select u-mb-xsmall">
-                        <select class="c-select__input" v-model="form.person" type="text" placeholder="Select"
-                                @blur="$v.form.person.$touch()"
-                                :class="{'c-input--danger': $v.form.person.$error}">
+                        <select class="c-select__input" v-model="form.to" type="text" placeholder="Select"
+                                @blur="$v.form.to.$touch()"
+                                :class="{'c-input--danger': $v.form.to.$error}">
                             <option value="" style="display: none" disabled selected>Select user</option>
-                            <option value="1">Gašper Grom</option>
-                            <option value="2">Nejc Velkavrh</option>
-                            <option value="3">Žiga Likar</option>
+                            <option :value="employee._id" v-for="employee of $store.state.companies.employees">
+                                {{employee.realName?employee.realName:""}}
+                            </option>
                         </select>
                         <small class="c-field__message  u-color-danger"
-                               v-if="$v.form.person.$dirty && !$v.form.person.required">
-                            <i class="feather icon-info"></i>Please chooser user
+                               v-if="$v.form.to.$dirty && !$v.form.to.required">
+                            <i class="feather icon-info"></i>Please choose user
                         </small>
                     </div>
                 </div>
@@ -36,17 +36,18 @@
                         </small>
                         <small class="c-field__message  u-color-danger"
                                v-if="$v.form.amount.$dirty && !$v.form.amount.between">
-                            <i class="feather icon-info"></i>Please enter amount between 0 and {{$store.state.user.kudosToGive}}
+                            <i class="feather icon-info"></i>Please enter amount between 0 and
+                            {{$store.state.user.kudosToGive}}
                         </small>
                     </div>
 
                 </div>
                 <div class="col-md-5">
                     <div class="c-field u-mb-xsmall">
-                        <input class="c-input" v-model="form.message" type="text" @blur="$v.form.message.$touch()"
-                               placeholder="Message" :class="{'c-input--danger': $v.form.message.$error}">
+                        <input class="c-input" v-model="form.comment" type="text" @blur="$v.form.comment.$touch()"
+                               placeholder="Message" :class="{'c-input--danger': $v.form.comment.$error}">
                         <small class="c-field__message  u-color-danger"
-                               v-if="$v.form.message.$dirty && !$v.form.message.required">
+                               v-if="$v.form.comment.$dirty && !$v.form.comment.required">
                             <i class="feather icon-info"></i>This is a required field
                         </small>
                     </div>
@@ -55,6 +56,14 @@
             <button class="c-btn c-btn--info" v-if="!$v.$invalid">
                 Send
             </button>
+            <small class="c-field__message  u-color-danger"
+                   v-if="invalid">
+                <i class="feather icon-info"></i>Cannot send kudos
+            </small>
+            <small class="c-field__message  u-color-success"
+                   v-if="sent">
+                <i class="feather icon-info"></i>Kudos sent
+            </small>
         </form>
     </div>
 </template>
@@ -67,16 +76,18 @@
         data: function () {
             return {
                 form: {
-                    person: "",
+                    to: "",
                     amount: "",
-                    message: ""
-                }
+                    comment: ""
+                },
+                invalid: false,
+                sent: false,
             }
         },
         validations() {
             return {
                 form: {
-                    person: {
+                    to: {
                         required
                     },
                     amount: {
@@ -84,7 +95,7 @@
                         numeric,
                         between: between(0, this.$store.state.user.kudosToGive)
                     },
-                    message: {
+                    comment: {
                         required
                     }
                 }
@@ -94,7 +105,28 @@
 
         methods: {
             submit: function () {
-                console.log(this.form);
+                if(this.$v.$invalid){
+                    return;
+                }
+                this.invalid=false;
+                this.sent=false;
+                let form = this.form;
+                form["from"] = this.$store.state.auth.userId;
+                this.$axios.post("/kudos-txs", form)
+                    .then((res) => {
+                        this.$store.state.user.kudosToGive-=this.form.amount;
+                        this.$v.$reset();
+                        this.form={
+                            to: "",
+                            amount: "",
+                            comment: ""
+                        };
+                        this.sent=true;
+
+                    })
+                    .catch((err) => {
+                        this.invalid=true;
+                    })
             }
         }
     }

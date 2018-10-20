@@ -60,7 +60,10 @@
     import IndexMakeRequest from "../components/index/make-request";
     import IndexActivity from "../components/index/activity";
     export default {
-        components: {IndexActivity, IndexMakeRequest, IndexSendKudos}
+        components: {IndexActivity, IndexMakeRequest, IndexSendKudos},
+        created(){
+            this.$store.commit("GET_ACTIVITY");
+        }
     }
 </script>
 

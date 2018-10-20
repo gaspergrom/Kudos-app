@@ -26,6 +26,7 @@
                 })
                     .then((res) => {
                         let data = res.data;
+                        console.log("DATA:::", data);
                         if (data.authType === "employee") {
                             this.$store.state.auth.userId = data.data.employee._id;
                             this.$store.state.user.name = data.data.employee.name;
@@ -42,6 +43,12 @@
                             this.$store.state.companies.departments = data.data.company.departments;
                             this.$store.state.companies.employees = data.data.employees;
                             Cookies.set("teamId", data.data.company._id);
+                            this.$axios.get(`/companies/${res.data._id}/employees`)
+                                .then((res)=>{
+                                    this.$store.state.companies.employees = res.data.filter((value) => {
+                                        return value.slackId !== "USLACKBOT";
+                                    });
+                                })
                         }
                         this.$router.push("/");
                     })

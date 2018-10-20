@@ -2,9 +2,9 @@ export default {
     state: {
         picture: "",
         name: "",
-        availableKudos: 6,
-        kudosToGive: 6,
-        receivedKudos: 6
+        availableKudos: 0,
+        kudosToGive: 0,
+        receivedKudos: 0
     },
 
     mutations: {},

@@ -24,18 +24,24 @@
             }
         },
         created() {
-            if(this.$store.state.auth.teamId == null){
+            if (this.$store.state.auth.teamId == null) {
                 let teamId = Cookies.get("teamId");
-                if(teamId){
+                if (teamId) {
                     this.$store.state.auth.teamId = teamId;
-                    this.$axios.get("/companies/" + teamId)
+                    this.$axios.get(`/companies/${teamId}`)
                         .then((res) => {
-                            console.log(res);
+
                             this.$store.state.auth.teamId = res.data._id;
                             this.$store.state.companies.name = res.data.title;
                             this.$store.state.companies.slug = res.data.slug;
                             this.$store.state.companies.departments = res.data.departments;
-                            this.$store.state.companies.employees = res.data.employees;
+                            this.$axios.get(`/companies/${res.data._id}/employees`)
+                                .then((res) => {
+                                    this.$store.state.companies.employees = res.data.filter((value) => {
+                                        return value.slackId !== "USLACKBOT";
+                                    });
+                                    console.log("EMPLOYEES", res);
+                                })
                         });
                 }
             }

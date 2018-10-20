@@ -102,6 +102,9 @@
                     return task.accepted && !task.finished
                 })
             }
+        },
+        created(){
+            this.$store.commit("GET_TASKS");
         }
     }
 </script>
