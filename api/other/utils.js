@@ -66,7 +66,7 @@ module.exports = {
                 let employee = await employeeRouter.baseClass.findOne({ slackId: user.id }).exec();
     
                 if (employee == null || employee == undefined)
-                    employee = await this.addEmployee(user, company);
+                    employee = await this.addEmployee(user, company._id);
                 
                 employees.push(employee);
             }
@@ -98,7 +98,7 @@ module.exports = {
         let company = await companyRouter.baseClass.findOne({ slackId: teamData.id }).exec();
 
         if (employee == null || employee == undefined)
-            employee = await this.addEmployee(userData, company);
+            employee = await this.addEmployee(userData, company ? company._id : null);
 
         return {
             authType: 'employee',
@@ -121,8 +121,7 @@ module.exports = {
             departments: []
         };
 
-        await this.post(conf.axios.baseURL, companyRouter.baseRoute, company);
-        return company;
+        return await this.post(conf.axios.baseURL, companyRouter.baseRoute, company);
     },
 
     /**
@@ -131,13 +130,13 @@ module.exports = {
      * @param {*} slackUserData Slack user data
      * @param {*} fromCompany The company the user is from
      */
-    addEmployee: async function (slackUserData, fromCompany) {
+    addEmployee: async function (slackUserData, fromCompanyId) {
         employee = {
             slackId: slackUserData.id,
             name: slackUserData.name,
             realName: slackUserData.real_name, // TODO: če signin z userjem, ne dobiš realName?
             imgPaths: this.extractUserProfileImages(slackUserData),
-            company: fromCompany ? fromCompany : null,
+            company: fromCompanyId ? fromCompanyId : null,
             departments: [], // TODO: get employee's departments
             roles: [], // TODO: get user's roles
             availableKudos: conf.general.startingAvailableKudos,
@@ -145,8 +144,7 @@ module.exports = {
             receivedKudos: conf.general.startingReceivedKudos
         };
 
-        await this.post(conf.axios.baseURL, employeeRouter.baseRoute, employee);
-        return employee;
+        return await this.post(conf.axios.baseURL, employeeRouter.baseRoute, employee);
     },
 
     /**
@@ -173,9 +171,10 @@ module.exports = {
      * @param {*} baseUrl Base url of the request
      * @param {*} uri Route of the request (full uri = baseUrl + uri)
      * @param {*} body The JSON content/body to send
+     * Returns the response
      */
     post: async function (baseUrl, uri, body) {
-        await rp({
+        return await rp({
             method: 'POST',
             baseUrl: baseUrl,
             uri: uri,
