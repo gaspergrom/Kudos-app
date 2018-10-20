@@ -57,8 +57,8 @@ module.exports = {
         slackOAuthAccessUrl: 'https://slack.com/api/oauth.access'
     },
     slackWorkspaceData: {
-        clientId: '373180051559.455945801345',
-        clientSecret: 'a2896a7e8888b201ea75674d819469bb',
+        clientId: '373180051559.455692683652',
+        clientSecret: '50afe6cdc4267f22c91f5aea5a5a256a',
         redirectUri: 'http://localhost:3000/slack'
     },
     serverMiddleware: [
