@@ -1,16 +1,19 @@
 const
+    routePath = '/redeem-kudos',
     employeeModel = require('../../models/employee'),
     conf = require('../../../nuxt.config'),
     { Router } = require('express'),
     router = Router();
 
-router.post('/redeem-kudos', async (req, res) => {
-    bool 
+router.get(routePath, (req, res) => {
+    res.json(conf.redeemOptions);
+});
+
+router.post(routePath, async (req, res) => {
     if (req && req.body) {
         const option = req.body.redeemOption;
         const employeeId = req.body.employeeId; // MongoDB employee
 
-        console.log('option ' + option + ' for employee ' + employeeId)
         if (employeeId && option < conf.redeemOptions.length) {
             const redeemOption = conf.redeemOptions[option];
             const employee = await employeeModel.findById(employeeId).exec();

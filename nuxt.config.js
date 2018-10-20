@@ -66,15 +66,23 @@ module.exports = {
     redeemOptions: [
         {
             title: 'Amazon 10$ gift card',
-            amount: 100
+            amount: 20,
+            imgPath: 'https://production-gameflipusercontent.fingershock.com/us-east-1:47d82dc3-4acd-4d96-8053-9ae2fae26d3a/531dd84f-d193-4eb5-b549-0fd0d7c99ce4/781c67f6-0467-4eb4-bdbd-34c02fc4eb12'
         },
         {
-            title: 'Amazon 20$ gift card',
-            amount: 200
+            title: 'Asos 10$ gift card',
+            amount: 20,
+            imgPath: 'https://res.cloudinary.com/giftcloud/image/upload/w_300,h_188,f_auto,fl_strip_profile,q_90/v1526561755/ctzqhk4ud0tfomxxl8fg.jpg'
         },
         {
-            title: 'Amazon 30$ gift card',
-            amount: 300
+            title: 'Spotify 10$ gift card',
+            amount: 20,
+            imgPath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYXmUh02wNNbYgB6iNh6XFwiJY0d5wisRK0iY64VQI1YUvSW_y'
+        },
+        {
+            title: 'Steam 10$ gift card',
+            amount: 20,
+            imgPath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0EMxxtT9GQD8FH0WwjWmwhz801wawEP62EJ3_8ZdgakVTTqRA'
         }
     ],
     serverMiddleware: [
