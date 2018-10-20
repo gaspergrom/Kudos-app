@@ -128,11 +128,11 @@ module.exports = class BaseRouter {
             this.router.patch('/' + this.baseRoute + '/:id', (req, res) => {
                 if (req.body) {
                     const id = req.params.id;
-                    let data = this.baseClass.findByIdAndUpdate(req.params.id, req.body, { upsert: false });
-                    
                     if (req.body.title || req.body.name)
                         req.body.slug = req.body.title ? slugify(req.body.title) : slugify(req.body.name);
 
+                    let data = this.baseClass.findByIdAndUpdate(req.params.id, req.body, { upsert: false });
+                    
                     if (populateFields)
                         for (let i in populateFields)
                             data.populate(populateFields[i]);
