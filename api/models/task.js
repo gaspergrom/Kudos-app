@@ -1,4 +1,6 @@
 const
+    DepartmentModel = require('../models/department'),
+    EmployeeModel = require('../models/employee'),
     mongoose = require('mongoose'),
     KudosRequestState = require('../other/kudos-request-state');
 
@@ -8,30 +10,30 @@ const kudosRequestSchema = new mongoose.Schema({
         ref: 'kudos-request-state'
     },
     assignedBy: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: EmployeeModel.schema,
         ref: 'employee'
     },
     offeredToDepartments: [
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: DepartmentModel.schema,
             ref: 'department'
         }
     ],
     offeredToEmployees: [
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: EmployeeModel.schema,
             ref: 'employee'
         }
     ],
     assignedTo: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: EmployeeModel.schema,
         ref: 'employee'
     },
     kudosReward: Number,
     title: String,
     comment: String,
     
-    creationDate: Date,
+    date: Date,
     assignedDate: Date,
     waitingForApprovalDate: Date,
     completedDate: Date
