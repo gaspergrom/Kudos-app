@@ -26,6 +26,7 @@
         methods: {
             logout: function () {
                 console.log("logging out");
+                this.$store.state.auth.userId=null;
                 Cookies.remove("userId");
                 this.$router.push("/login");
             }

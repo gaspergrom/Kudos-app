@@ -9,12 +9,11 @@
         <div class="row u-mb-xlarge">
             <div class="col-lg-4" v-for="item of $store.state.shop.items">
                 <div class="c-plan">
-              <span class="c-plan__icon c-icon c-icon--info c-icon--large">
-                <i class="feather icon-shopping-cart"></i>
-              </span>
-
-                    <h3 class="c-plan__title">{{item.name}}</h3>
-                    <div class="c-plan__price">{{item.price}}<span class="c-plan__duration">kudos</span></div>
+                    <div>
+                        <img :src="item.imgPath" class="img">
+                    </div>
+                    <h3 class="c-plan__title">{{item.title}}</h3>
+                    <div class="c-plan__price">{{item.amount}}<span class="c-plan__duration">kudos</span></div>
 
                     <button class="c-btn c-btn--info c-btn--outline c-btn--fullwidth" :disabled="item.price>$store.state.user.availableKudos">Redeem</button>
                 </div>
@@ -24,7 +23,11 @@
 </template>
 
 <script>
-    export default {}
+    export default {
+        created(){
+            this.$store.commit("GET_SHOP")
+        }
+    }
 </script>
 
 <style scoped>

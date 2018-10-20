@@ -11,21 +11,24 @@
                         <div class="o-media">
                             <div class="o-media__img u-mr-small">
                                 <div class="c-avatar c-avatar--xsmall">
-                                    <img class="c-avatar__img" :src="activity.profileImg" alt="Name">
+                                    <img class="c-avatar__img" :src="activity.to.slackId===$store.state.auth.userId?activity.from.imgPaths.image_72:activity.to.imgPaths.image_72" alt="Name">
                                 </div>
                             </div>
 
                             <div class="o-media__body">
-                                <h6>{{activity.firstName}} {{activity.lastName}}</h6>
-                                <p>{{activity.message}}</p>
+                                <h6>
+                                    <span class="feather icon-arrow-left" v-if="activity.to.slackId===$store.state.auth.userId"></span>
+                                    <span class="feather icon-arrow-right" v-else></span>
+                                    {{activity.to.realName}}</h6>
+                                <p>{{activity.comment}}</p>
                             </div>
                         </div>
 
-                        <h6>{{activity.amount}} kudos
-                            <span class="u-color-success u-block" v-if="activity.success">
+                        <h6>{{activity.to.slackId===$store.state.auth.userId?"received": "sent"}} {{activity.amount}} kudos
+                            <span class="u-color-success u-block text-right" v-if="activity.to.slackId===$store.state.auth.userId">
                       <i class="feather icon-trending-up"></i>
                     </span>
-                            <span class="u-color-danger u-block" v-else>
+                            <span class="u-color-danger u-block text-right" v-else>
                       <i class="feather icon-trending-down"></i>
                     </span>
                         </h6>
@@ -37,7 +40,11 @@
 </template>
 
 <script>
-    export default {}
+    export default {
+        created(){
+            this.$store.commit("GET_ACTIVITY");
+        }
+    }
 </script>
 
 <style scoped>

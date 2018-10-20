@@ -1,22 +1,19 @@
 export default {
     state: {
         items: [
-            {
-                name: "Amazon 10$ gift card",
-                price: 100
-            },
-            {
-                name: "Amazon 20$ gift card",
-                price: 200
-            },
-            {
-                name: "Amazon 30$ gift card",
-                price: 300
-            },
         ]
     },
 
-    mutations: {},
+    mutations: {
+        GET_SHOP: function (state) {
+            this.$axios.get("/redeem-kudos")
+                .then((res)=>{
+                    console.log("SHOP", res);
+                    state.items=res.data;
+                })
+
+        }
+    },
     gettes: {
     }
 }

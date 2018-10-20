@@ -9,9 +9,9 @@
                                 @blur="$v.form.person.$touch()"
                                 :class="{'c-input--danger': $v.form.person.$error}">
                             <option value="" style="display: none" disabled selected>Select user</option>
-                            <option value="1">Gašper Grom</option>
-                            <option value="2">Nejc Velkavrh</option>
-                            <option value="3">Žiga Likar</option>
+                            <option :value="employee._id" v-for="employee of $store.state.companies.employees">
+                                {{employee.realName}}
+                            </option>
                         </select>
                         <small class="c-field__message  u-color-danger"
                                v-if="$v.form.person.$dirty && !$v.form.person.required">
@@ -55,6 +55,14 @@
             <button class="c-btn c-btn--info" v-if="!$v.$invalid">
                 Make
             </button>
+            <small class="c-field__message  u-color-danger"
+                   v-if="invalid">
+                <i class="feather icon-info"></i>Error making request
+            </small>
+            <small class="c-field__message  u-color-success"
+                   v-if="sent">
+                <i class="feather icon-info"></i>Request has been made
+            </small>
         </form>
     </div>
 </template>
@@ -70,7 +78,9 @@
                     person: "",
                     amount: "",
                     message: ""
-                }
+                },
+                invalid: false,
+                sent: false
             }
         },
         validations() {
@@ -97,7 +107,23 @@
                 if(this.$v.$invalid){
                     return;
                 }
-                console.log(this.form);
+                this.invalid=false;
+                this.sent=false;
+                let form = this.form;
+                form["from"] = this.$store.state.auth.userId;
+                this.$axios.post("/kudos-txs", form)
+                    .then((res) => {
+                        this.$v.$reset();
+                        this.form={
+                            to: "",
+                            amount: "",
+                            comment: ""
+                        };
+                        this.sent=true;
+                    })
+                    .catch((err) => {
+                        this.invalid=true;
+                    })
             }
         }
     }
