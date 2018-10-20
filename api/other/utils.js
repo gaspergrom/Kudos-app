@@ -149,7 +149,7 @@ module.exports = {
             slackId: slackUserData.id,
             name: slackUserData.name,
             realName: slackUserData.real_name, // TODO: če signin z userjem, ne dobiš realName?
-            imgPaths: this.extractUserProfileImages(slackUserData),
+            imgPaths: slackUserData.profile ? this.extractUserProfileImages(slackUserData.profile) : this.extractUserProfileImages(slackUserData),
             company: fromCompanyId ? fromCompanyId : null,
             departments: [], // TODO: get employee's departments
             roles: [], // TODO: get user's roles
@@ -165,16 +165,16 @@ module.exports = {
      * Extracts all resolutions of the Slack profile image from the Slack user data
      * @param {*} slackUserData Slack user data to extract the images from
      */
-    extractUserProfileImages: function (slackUserData) {
-        if (slackUserData && slackUserData.profile)
+    extractUserProfileImages: function (slackUserProfile) {
+        if (slackUserProfile)
             return {
-                image_24: slackUserData.profile.image_24,
-                image_32: slackUserData.profile.image_32,
-                image_48: slackUserData.profile.image_48,
-                image_72: slackUserData.profile.image_72,
-                image_192: slackUserData.profile.image_192,
-                image_512: slackUserData.profile.image_512,
-                image_1024: slackUserData.profile.image_1024
+                image_24: slackUserProfile.image_24,
+                image_32: slackUserProfile.image_32,
+                image_48: slackUserProfile.image_48,
+                image_72: slackUserProfile.image_72,
+                image_192: slackUserProfile.image_192,
+                image_512: slackUserProfile.image_512,
+                image_1024: slackUserProfile.image_1024
             };
         else
             return [];
