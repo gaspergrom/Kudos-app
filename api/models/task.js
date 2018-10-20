@@ -1,6 +1,4 @@
 const
-    DepartmentModel = require('../models/department'),
-    EmployeeModel = require('../models/employee'),
     mongoose = require('mongoose'),
     KudosRequestState = require('../other/kudos-request-state');
 
@@ -10,11 +8,11 @@ const kudosRequestSchema = new mongoose.Schema({
         ref: 'kudos-request-state'
     },
     assignedBy: {
-        type: EmployeeModel.schema,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'employee'
     },
     assignedTo: {
-        type: EmployeeModel.schema,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'employee'
     },
     kudosReward: Number,

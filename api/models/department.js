@@ -1,11 +1,9 @@
-const
-    EmployeeModel = require('../models/employee'),
-    mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 const departmentSchema = new mongoose.Schema({
     title: String,
     manager: {
-        type: EmployeeModel.schema,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'employee'
     },
     slug: String
