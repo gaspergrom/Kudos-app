@@ -23,16 +23,18 @@ const kudosRequestSchema = new mongoose.Schema({
             ref: 'employee'
         }
     ],
-    assignedTo: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'employee'
-        }
-    ],
+    assignedTo: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'employee'
+    },
     kudosReward: Number,
     title: String,
     comment: String,
-    date: Date
+    
+    creationDate: Date,
+    assignedDate: Date,
+    waitingForApprovalDate: Date,
+    completedDate: Date
 });
 
 module.exports = mongoose.model('kudos-request', kudosRequestSchema);
