@@ -16,20 +16,15 @@ app.use(bodyParser.json());
 
 // Require API routes
 const
-  companies = require('./routes/basic/companies'),
-  employees = require('./routes/basic/employees'),
-  departments = require('./routes/basic/departments'),
-  kudosTxs = require('./routes/basic/kudos-txs'),
-  kudosRequests = require('./routes/basic/kudos-requests');
-
-const
-  auth = require('./routes/auth/auth');
-
-const
-  slackKudos = require('./routes/commands/slack-kudos');
-
-const
-  events = require('./routes/events/events');
+  companies = require('./routes/database-models/companies'),
+  employees = require('./routes/database-models/employees'),
+  departments = require('./routes/database-models/departments'),
+  kudosTxs = require('./routes/database-models/kudos-txs'),
+  kudosRequests = require('./routes/database-models/kudos-requests'),
+  auth = require('./routes/auth/auth'),
+  slackKudos = require('./routes/commands/slack-kudos'),
+  events = require('./routes/events/events'),
+  redeemKudos = require('./routes/other/redeem-kudos');
 
 // Import API Routes
 app.use(companies.router);
@@ -46,6 +41,9 @@ app.use(events);
 
 // Import command routes
 app.use(slackKudos);
+
+// Import other routes
+app.use(redeemKudos);
 
 // Export the server middleware
 module.exports = {

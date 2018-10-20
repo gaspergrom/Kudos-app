@@ -1,8 +1,8 @@
 const
     conf = require('../../nuxt.config'),
     rp = require('request-promise'),
-    companyRouter = require('../routes/basic/companies'),
-    employeeRouter = require('../routes/basic/employees');
+    companyRouter = require('../routes/database-models/companies'),
+    employeeRouter = require('../routes/database-models/employees');
 
 module.exports = {
     /**
