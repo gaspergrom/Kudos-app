@@ -13,6 +13,7 @@ mongoose.connect(config.databaseConfig.url, { useNewUrlParser: true }, (err) => 
 // Create express instance
 const app = express();
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 // Require API routes
 const
