@@ -1,0 +1,39 @@
+/* ---------------------------------- *\
+    Text
+\* ---------------------------------- */
+
+.text {
+
+    /* FONT WEIGHT */
+    &-bold{
+        font-weight: 700;
+    }
+    &-normal{
+        font-weight: 400;
+    }
+    &-thin{
+        font-weight: 300;
+    }
+
+    /* TEXT ALIGNMENT */
+    &-center {
+        text-align: center;
+    }
+
+    &-right {
+        text-align: right;
+    }
+
+    &-left {
+        text-align: left;
+    }
+
+    /* TEXT TRANSFORM */
+    &-uppercase {
+        text-transform: uppercase;
+    }
+
+    &-capitalize {
+        text-transform: capitalize;
+    }
+}

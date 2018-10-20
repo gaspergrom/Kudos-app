@@ -1,0 +1,12 @@
+/* ---------------------------------- *\
+    Backgruonds
+\* ---------------------------------- */
+
+/* background properties */
+.bg {
+    /* background image */
+    &--image {
+        background: no-repeat 50% 50%;
+        background-size: cover;
+    }
+}
