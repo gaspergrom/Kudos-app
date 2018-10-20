@@ -67,7 +67,7 @@ module.exports = {
         {
             title: 'Amazon 10$ gift card',
             amount: 20,
-            imgPath: 'https://production-gameflipusercontent.fingershock.com/us-east-1:47d82dc3-4acd-4d96-8053-9ae2fae26d3a/531dd84f-d193-4eb5-b549-0fd0d7c99ce4/781c67f6-0467-4eb4-bdbd-34c02fc4eb12'
+            imgPath: 'https://i.imgur.com/S8RHXZs.png'
         },
         {
             title: 'Asos 10$ gift card',
@@ -77,7 +77,7 @@ module.exports = {
         {
             title: 'Spotify 10$ gift card',
             amount: 20,
-            imgPath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYXmUh02wNNbYgB6iNh6XFwiJY0d5wisRK0iY64VQI1YUvSW_y'
+            imgPath: 'https://i.imgur.com/ZfwrxFj.png'
         },
         {
             title: 'Steam 10$ gift card',
