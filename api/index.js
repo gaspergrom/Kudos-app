@@ -25,7 +25,8 @@ const
   auth = require('./routes/auth/auth'),
   slackKudos = require('./routes/commands/slack-kudos'),
   events = require('./routes/events/events'),
-  redeemKudos = require('./routes/other/redeem-kudos');
+  redeemKudos = require('./routes/other/redeem-kudos'),
+  transactKudos = require('./routes/other/transact-kudos');
 
 // Import API Routes
 app.use(companies.router);
@@ -46,6 +47,7 @@ app.use(slackKudos);
 
 // Import other routes
 app.use(redeemKudos);
+app.use(transactKudos);
 
 // Export the server middleware
 module.exports = {
