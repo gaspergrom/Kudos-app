@@ -5,6 +5,9 @@ const
     BaseRouter = require('../base-router'),
     router = new BaseRouter(name, pluralName);
 
+/**
+ * Returns an array of all employees of the specified company
+ */
 router.router.get('/' + pluralName + '/:id/employees', (req, res) => {
     if (req && req.params && req.params.id) {
         const id = req.params.id;

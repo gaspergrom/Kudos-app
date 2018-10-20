@@ -86,6 +86,13 @@ module.exports = {
         }
     },
 
+    /**
+     * Processes the received user from the access token
+     * Adds the received user to the database and assigns the company if it exists
+     * Returns the employee
+     * @param {*} userData Slack user data
+     * @param {*} teamData Slack team data
+     */
     processSlackUser: async function (userData, teamData) {
         let employee = await employeeRouter.baseClass.findOne({ slackId: userData.id });
         let company = await companyRouter.baseClass.findOne({ slackId: teamData.id }).exec();
