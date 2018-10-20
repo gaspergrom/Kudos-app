@@ -25,6 +25,9 @@ const
 const
   auth = require('./routes/auth/auth');
 
+const
+  slackKudos = require('./routes/commands/slack-kudos');
+
 // Import API Routes
 app.use(companies.router);
 app.use(employees.router);
@@ -34,6 +37,9 @@ app.use(kudosRequests.router);
 
 // Import login routes
 app.use(auth);
+
+// Import command routes
+app.use(slackKudos);
 
 // Export the server middleware
 module.exports = {
