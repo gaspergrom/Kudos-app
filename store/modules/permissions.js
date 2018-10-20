@@ -1,6 +1,6 @@
 export default {
     state: {
-        maxKudosPerMonth: 100
+        admin: false,
     },
 
     mutations: {},

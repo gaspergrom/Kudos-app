@@ -4,6 +4,8 @@ import AuthenticationModule from './modules/authentication';
 import CompaniesModule from './modules/companies';
 import UserModule from './modules/user';
 import ActivityModule from './modules/activity';
+import PermissionsModule from './modules/permissions';
+import ShopModule from './modules/shop';
 
 const createStore = () => {
     return new Vuex.Store({
@@ -13,6 +15,8 @@ const createStore = () => {
             companies: CompaniesModule,
             user: UserModule,
             activity: ActivityModule,
+            permissions: PermissionsModule,
+            shop: ShopModule,
         }
     })
 };

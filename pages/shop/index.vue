@@ -7,40 +7,16 @@
             </div>
         </div>
         <div class="row u-mb-xlarge">
-            <div class="col-lg-4">
+            <div class="col-lg-4" v-for="item of $store.state.shop.items">
                 <div class="c-plan">
               <span class="c-plan__icon c-icon c-icon--info c-icon--large">
                 <i class="feather icon-shopping-cart"></i>
               </span>
 
-                    <h3 class="c-plan__title">Amazon 10$ gift</h3>
-                    <div class="c-plan__price">20<span class="c-plan__duration">kudos</span></div>
+                    <h3 class="c-plan__title">{{item.name}}</h3>
+                    <div class="c-plan__price">{{item.price}}<span class="c-plan__duration">kudos</span></div>
 
-                    <a class="c-btn c-btn--info c-btn--outline c-btn--fullwidth" href="#">Redeem</a>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="c-plan">
-              <span class="c-plan__icon c-icon c-icon--info c-icon--large">
-                <i class="feather icon-shopping-cart"></i>
-              </span>
-
-                    <h3 class="c-plan__title">Amazon 10$ gift</h3>
-                    <div class="c-plan__price">20<span class="c-plan__duration">kudos</span></div>
-
-                    <a class="c-btn c-btn--info c-btn--outline c-btn--fullwidth" href="#">Redeem</a>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="c-plan">
-              <span class="c-plan__icon c-icon c-icon--info c-icon--large">
-                <i class="feather icon-shopping-cart"></i>
-              </span>
-
-                    <h3 class="c-plan__title">Amazon 10$ gift</h3>
-                    <div class="c-plan__price">20<span class="c-plan__duration">kudos</span></div>
-
-                    <a class="c-btn c-btn--info c-btn--outline c-btn--fullwidth" href="#">Redeem</a>
+                    <button class="c-btn c-btn--info c-btn--outline c-btn--fullwidth" :disabled="item.price>$store.state.user.availableKudos">Redeem</button>
                 </div>
             </div>
         </div>
