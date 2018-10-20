@@ -57,6 +57,11 @@ module.exports = {
         slackTeamInfoUrl: 'https://slack.com/api/team.info',
         slackOAuthAccessUrl: 'https://slack.com/api/oauth.access'
     },
+    general: {
+        startingAvailableKudos: 0,
+        startingKudosToGive: 100,
+        startingReceivedKudos: 0
+    },
     slackWorkspaceData: {
         clientId: '373180051559.455692683652',
         clientSecret: '50afe6cdc4267f22c91f5aea5a5a256a',

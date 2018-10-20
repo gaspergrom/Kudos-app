@@ -140,9 +140,9 @@ module.exports = {
             company: fromCompany ? fromCompany : null,
             departments: [], // TODO: get employee's departments
             roles: [], // TODO: get user's roles
-            availableKudos: 0,
-            kudosToGive: 10,
-            receivedKudos: 0
+            availableKudos: conf.general.startingAvailableKudos,
+            kudosToGive: conf.general.startingKudosToGive,
+            receivedKudos: conf.general.startingReceivedKudos
         };
 
         this.post(conf.axios.baseURL, employeeRouter.baseRoute, employee);
