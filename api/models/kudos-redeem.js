@@ -1,10 +1,11 @@
 const
+    EmployeeModel = require('../models/employee'),
     RedeemOptions = require('../other/redeem-option'),
     mongoose = require('mongoose');
 
 const kudosRedeemSchema = new mongoose.Schema({
     employee: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: EmployeeModel.schema,
         ref: 'employee'
     },
     redeemOption: {
