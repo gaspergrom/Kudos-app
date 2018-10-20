@@ -15,7 +15,7 @@
                     <span class="c-divider u-mv-small"></span>
 
                     <span class="c-text--subtitle text-center width100 block">Avaliable Kudos</span>
-                    <p class="u-mb-small u-text-large text-center">{{$store.state.user.avaliableKudos}}</p>
+                    <p class="u-mb-small u-text-large text-center">{{$store.state.user.availableKudos}}</p>
 
                     <span class="c-text--subtitle text-center width100 block">Kudos to give</span>
                     <p class="u-mb-small u-text-large text-center">{{$store.state.user.kudosToGive}}/{{$store.state.globals.maxKudosPerMonth}}</p>

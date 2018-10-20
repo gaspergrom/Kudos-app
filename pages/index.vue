@@ -8,8 +8,8 @@
                   <i class="feather icon-shopping-cart"></i>
                 </span>
 
-                    <h3 class="c-text--subtitle">Avaliable Kudos</h3>
-                    <h1>{{$store.state.user.avaliableKudos}}</h1>
+                    <h3 class="c-text--subtitle">Available Kudos</h3>
+                    <h1>{{$store.state.user.availableKudos}}</h1>
                 </div>
             </div>
 

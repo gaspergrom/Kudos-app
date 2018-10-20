@@ -27,19 +27,19 @@
                     .then((res) => {
                         let data = res.data;
                         console.log(data);
-                        Cookies.set("userId", data.employee.slackId);
-                        Cookies.set("data", data);
-                        this.$store.state.auth.userID = data.employee.slackId;
-                        this.$store.state.auth.userID = data.company.slackId;
-                        this.$store.state.user.picture = data.employee.imgPaths;
-                        this.$store.state.user.name = data.employee.name;
-                        this.$store.state.user.availableKudos = data.employee.availableKudos;
-                        this.$store.state.user.kudosToGive = data.employee.kudosToGive;
-                        this.$store.state.user.receivedKudos = data.employee.receivedKudos;
-                        this.$store.state.companies.name = data.company.title;
-                        this.$store.state.companies.slug = data.company.slug;
-                        this.$store.state.companies.departments = data.company.departments;
-                        this.$router.push("/");
+                        if (data.authType === "employee") {
+                            this.$store.state.auth.userID = data.data.employee.slackId;
+                            this.$store.state.user.name = data.data.employee.name;
+                            this.$store.state.user.availableKudos = data.data.employee.availableKudos;
+                            this.$store.state.user.kudosToGive = data.data.employee.kudosToGive;
+                            this.$store.state.user.receivedKudos = data.data.employee.receivedKudos;
+                            Cookies.set("employees", data);
+                            Cookies.set("userId", data.data.employee.slackId);
+                        }
+                        else if (data.authType === "workspace") {
+
+                        }
+                        //this.$router.push("/");
                     })
             }
         }
