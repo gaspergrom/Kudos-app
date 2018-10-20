@@ -8,6 +8,7 @@ const
 
 router.router.post('/' + pluralName, async (req, res) => {
     if (req && req.body) {
+        req.body.state = 'open';
         req.body.date = new Date().getTime();
 
         taskModel.create(req.body, (err, added) => {

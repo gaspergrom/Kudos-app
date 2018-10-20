@@ -16,7 +16,6 @@ const kudosRequestSchema = new mongoose.Schema({
         ref: 'employee'
     },
     kudosReward: Number,
-    title: String,
     comment: String,
     
     date: Date,
