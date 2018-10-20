@@ -1,12 +1,14 @@
-const mongoose = require('mongoose');
+const
+    EmployeeModel = require('./employee'),
+    mongoose = require('mongoose');
 
 const kudosTxSchema = new mongoose.Schema({
     from: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: EmployeeModel.schema,
         ref: 'employee'
     },
     to: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: EmployeeModel.schema,
         ref: 'employee'
     },
     amount: Number,
