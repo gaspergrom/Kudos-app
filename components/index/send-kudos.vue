@@ -112,7 +112,7 @@
                 this.sent=false;
                 let form = this.form;
                 form["from"] = this.$store.state.auth.userId;
-                this.$axios.post("/transact-kudos", form)
+                this.$axios.post("/kudos-txs", form)
                     .then((res) => {
                         this.$store.state.user.kudosToGive-=this.form.amount;
                         this.$v.$reset();
@@ -122,6 +122,7 @@
                             comment: ""
                         };
                         this.sent=true;
+                        this.$store.commit("GET_ACTIVITY")
 
                     })
                     .catch((err) => {

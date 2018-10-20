@@ -41,14 +41,10 @@
                             this.$store.state.companies.name = data.data.company.title;
                             this.$store.state.companies.slug = data.data.company.slug;
                             this.$store.state.companies.departments = data.data.company.departments;
-                            this.$store.state.companies.employees = data.data.employees;
+                            this.$store.state.companies.employees = data.data.employees.filter((value) => {
+                                return value.slackId !== "USLACKBOT";
+                            });
                             Cookies.set("teamId", data.data.company._id);
-                            this.$axios.get(`/companies/${res.data._id}/employees`)
-                                .then((res)=>{
-                                    this.$store.state.companies.employees = res.data.filter((value) => {
-                                        return value.slackId !== "USLACKBOT";
-                                    });
-                                })
                         }
                         this.$router.push("/");
                     })
