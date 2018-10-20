@@ -54,25 +54,50 @@ module.exports = {
      * @param {*} teamInfo Info about the Slack workspace
      */
     processSlackWorkspace: async function (usersList, teamInfo) {
-        let company = await companyRouter.baseClass.findOne({ slackId: teamInfo.id }).exec();
-        let employees = [];
-
-        if (company == null || company == undefined)
-            company = this.addCompany(teamInfo);
-
-        for (let i in usersList) {
-            const user = usersList[i];
-            let employee = await employeeRouter.baseClass.findOne({ slackId: user.id }).exec();
-
-            if (employee == null || employee == undefined)
-                employee = this.addEmployee(user, company);
-            
-            employees.push(employee);
+        if (usersList && teamInfo) {
+            let company = await companyRouter.baseClass.findOne({ slackId: teamInfo.id }).exec();
+            let employees = [];
+    
+            if (company == null || company == undefined)
+                company = this.addCompany(teamInfo);
+    
+            for (let i in usersList) {
+                const user = usersList[i];
+                let employee = await employeeRouter.baseClass.findOne({ slackId: user.id }).exec();
+    
+                if (employee == null || employee == undefined)
+                    employee = this.addEmployee(user, company);
+                
+                employees.push(employee);
+            }
+    
+            return {
+                authType: 'company',
+                data: {
+                    company: company,
+                    employees: employees
+                }
+            };
         }
+        else {
+            const msg = 'Failed to process Slack workspace.';
+            console.error(msg);
+            return { type: 'error', data: { msg: msg } };
+        }
+    },
+
+    processSlackUser: async function (userData, teamData) {
+        let employee = await employeeRouter.baseClass.findOne({ slackId: userData.id });
+        let company = await companyRouter.baseClass.findOne({ slackId: teamData.id }).exec();
+
+        if (employee == null || employee == undefined)
+            employee = this.addEmployee(userData, company);
 
         return {
-            company: company,
-            employees: employees
+            authType: 'employee',
+            data: {
+                employee: employee
+            }
         };
     },
 
@@ -103,13 +128,13 @@ module.exports = {
         employee = {
             slackId: slackUserData.id,
             name: slackUserData.name,
-            realName: slackUserData.real_name,
-            imgPaths: this.extractUserProfileImages(slackUserData), // TODO: ikone ne dobim v responsu?
-            company: fromCompany ? fromCompany : null, // TODO: je to kul?
+            realName: slackUserData.real_name, // TODO: če signin z userjem, ne dobiš realName?
+            imgPaths: this.extractUserProfileImages(slackUserData),
+            company: fromCompany ? fromCompany : null,
             departments: [], // TODO: get employee's departments
             roles: [], // TODO: get user's roles
-            availableKudos: 10,
-            kudosToGive: 10, // TODO: v config default value
+            availableKudos: 0,
+            kudosToGive: 10,
             receivedKudos: 0
         };
 
