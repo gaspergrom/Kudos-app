@@ -28,20 +28,24 @@ router.router.post('/' + pluralName, async (req, res) => {
             if (employee) {
                 if (redeemOption.amount <= employee.availableKudos) {
                     employee.availableKudos -= redeemOption.amount;
-                    employeeModel.findByIdAndUpdate(employeeId, employee, { upsert: false }).exec((err, original) => {
-                        if (err) {
-                            console.error('Error when updating employee available token data during kudos redeem: ' + err);
-                            res.json();
-                        }
-                        else {
-                            kudosRedeemModel.create(kudosRedeem, (err, added) => {
-                                if (err)
-                                    console.error('Error when adding a kudos redeem: ' + err);
-                                
-                                res.json(added);
-                            });
-                        }
-                    });
+                    employeeModel
+                        .findByIdAndUpdate(employeeId, employee, { upsert: false })
+                        .exec((err, original) => {
+                            if (err) {
+                                console.error('Error when updating employee available token data during kudos redeem: ' + err);
+                                res.json();
+                            }
+                            else {
+                                kudosRedeemModel
+                                    .create(kudosRedeem)
+                                    .exec((err, added) => {
+                                        if (err)
+                                            console.error('Error when adding a kudos redeem: ' + err);
+                                        
+                                        res.json(added);
+                                    });
+                            }
+                        });
                 }
                 else
                     res.json();

@@ -8,22 +8,14 @@ const
 
 router.router.post('/' + pluralName, async (req, res) => {
     if (req && req.body) {
-        const assignedById = req.body.assignedBy;
-        const assignedBy = await employeeModel.findById(assignedById);
+        req.body.date = new Date().getTime();
 
-        if (assignedBy) {
-            req.body.assignedBy = assignedBy;
-            req.body.date = new Date().getTime();
-
-            taskModel.create(req.body, (err, added) => {
-                if (err)
-                    console.error('Error when trying to create a task: ' + err);
-                
-                res.json(added);
-            });
-        }
-        else
-            res.json();
+        taskModel.create(req.body, (err, added) => {
+            if (err)
+                console.error('Error when trying to create a task: ' + err);
+            
+            res.json(added);
+        });
     }
     else
         res.json();
@@ -32,22 +24,18 @@ router.router.post('/' + pluralName, async (req, res) => {
 router.router.patch('/' + pluralName + '/:id', async (req, res) => {
     if (req && req.body && req.params && req.params.id) {
         const id = req.params.id;
-        const assignedToId = req.body.assignedTo;
-        const assignedTo = await employeeModel.findById(assignedToId);
+        req.body.date = new Date().getTime();
 
-        if (assignedTo) {
-            req.body.assignedTo = assignedTo;
-            req.body.date = new Date().getTime();
-
-            taskModel.findByIdAndUpdate(id, req.body, { upsert: false }, (err, original) => {
+        taskModel
+            .findByIdAndUpdate(id, req.body, { upsert: false })
+            .populate('assignedBy')
+            .populate('assignedTo')
+            .exec((err, original) => {
                 if (err)
                     console.error('Failed to update a task: ' + err);
                 
                 res.json(req.body);
             });
-        }
-        else
-            res.json();
     }
     else
         res.json();

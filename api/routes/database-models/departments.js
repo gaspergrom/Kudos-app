@@ -21,12 +21,16 @@ router.router.post('/' + pluralName, async (req, res) => {
                     console.error('Failed to add a department: ' + err);
                 
                 manager.departments.push(added);
-                EmployeeModel.findByIdAndUpdate(managerId, manager, (err, original) => {
-                    if (err)
-                        console.error('Failed to add manager to created department: ' + err);
-                    
-                    res.json(added);
-                });
+                EmployeeModel
+                    .findByIdAndUpdate(managerId, manager)
+                    .populate('company')
+                    .populate('departments')
+                    .exec((err, original) => {
+                        if (err)
+                            console.error('Failed to add manager to created department: ' + err);
+                        
+                        res.json(added);
+                    });
             });
         }
         else

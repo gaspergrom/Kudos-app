@@ -11,13 +11,17 @@ const
 router.router.get('/' + pluralName + '/:id/employees', (req, res) => {
     if (req && req.params && req.params.id) {
         const id = req.params.id;
+        console.log(id);
 
-        employeeModel.find({ company: id }, (err, filtered) => {
-            if (err)
-                console.error('Error when searching for employees of company \'' + id + '\': ' + err);
+        employeeModel
+            .find({ company: id })
+            .populate('departments')
+            .exec((err, filtered) => {
+                if (err)
+                    console.error('Error when searching for employees of company \'' + id + '\': ' + err);
 
-            res.json(filtered);
-        });
+                res.json(filtered);
+            });
     }
     else
         res.json();

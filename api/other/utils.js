@@ -55,7 +55,11 @@ module.exports = {
      */
     processSlackWorkspace: async function (usersList, teamInfo) {
         if (usersList && teamInfo) {
-            let company = await companyRouter.baseClass.findOne({ slackId: teamInfo.id }).exec();
+            let company = await companyRouter.baseClass
+                .findOne({ slackId: teamInfo.id })
+                .populate('departments')
+                .exec();
+            
             let employees = [];
     
             if (company == null || company == undefined)
@@ -63,7 +67,11 @@ module.exports = {
     
             for (let i in usersList) {
                 const user = usersList[i];
-                let employee = await employeeRouter.baseClass.findOne({ slackId: user.id }).exec();
+                let employee = await employeeRouter.baseClass
+                    .findOne({ slackId: user.id })
+                    .populate('company')
+                    .populate('departments')
+                    .exec();
     
                 if (employee == null || employee == undefined)
                     employee = await this.addEmployee(user, company._id);
@@ -94,8 +102,16 @@ module.exports = {
      * @param {*} teamData Slack team data
      */
     processSlackUser: async function (userData, teamData) {
-        let employee = await employeeRouter.baseClass.findOne({ slackId: userData.id });
-        let company = await companyRouter.baseClass.findOne({ slackId: teamData.id }).exec();
+        let employee = await employeeRouter.baseClass
+            .findOne({ slackId: userData.id })
+            .populate('company')
+            .populate('departments')
+            .exec();
+
+        let company = await companyRouter.baseClass
+            .findOne({ slackId: teamData.id })
+            .populate('departments')
+            .exec();
 
         if (employee == null || employee == undefined)
             employee = await this.addEmployee(userData, company ? company._id : null);
