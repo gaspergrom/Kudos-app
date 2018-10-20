@@ -37,18 +37,18 @@
             <span class="c-sidebar__title">{{$store.state.companies.name}}</span>
             <ul class="c-sidebar__list">
                 <li>
-                    <nuxt-link class="c-sidebar__link" :to="`/company/${$store.state.companies.slug}`" active-class="is-active" exact>
+                    <nuxt-link class="c-sidebar__link" :to="`/company`" active-class="is-active" exact>
                         <i class="c-sidebar__icon feather icon-users"></i>All members
                     </nuxt-link>
                 </li>
                 <li>
-                    <nuxt-link class="c-sidebar__link" :to="`/company/${$store.state.companies.name}/department`" active-class="is-active"
+                    <nuxt-link class="c-sidebar__link" :to="`/company/department`" active-class="is-active"
                                exact>
                         <i class="c-sidebar__icon feather icon-bookmark"></i>Departments
                     </nuxt-link>
                 </li>
                 <li v-for="(department, slug) of $store.state.companies.departments">
-                    <nuxt-link class="c-sidebar__link" :to="`/company/${$store.state.companies.name}/department/${department.slug}`"
+                    <nuxt-link class="c-sidebar__link" :to="`/company/department/${department.slug}`"
                                active-class="is-active" exact>
                         <i class="c-sidebar__icon feather icon-user"></i>{{department.name}}
                     </nuxt-link>
