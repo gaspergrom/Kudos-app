@@ -12,7 +12,7 @@ router.get(routePath, (req, res) => {
 router.post(routePath, async (req, res) => {
     if (req && req.body) {
         const option = req.body.redeemOption;
-        const employeeId = req.body.employeeId; // MongoDB employee
+        const employeeId = req.body.employeeId; // MongoDB employee ID
 
         if (employeeId && option < conf.redeemOptions.length) {
             const redeemOption = conf.redeemOptions[option];

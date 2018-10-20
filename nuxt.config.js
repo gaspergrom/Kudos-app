@@ -82,7 +82,7 @@ module.exports = {
         {
             title: 'Steam 10$ gift card',
             amount: 20,
-            imgPath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0EMxxtT9GQD8FH0WwjWmwhz801wawEP62EJ3_8ZdgakVTTqRA'
+            imgPath: 'https://i.imgur.com/dqGa70y.png'
         }
     ],
     serverMiddleware: [
