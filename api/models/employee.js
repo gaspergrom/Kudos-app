@@ -17,12 +17,6 @@ const employeeSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'company'
     },
-    departments: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'department'
-        }
-    ],
     roles: [String],
     availableKudos: Number,
     kudosToGive: Number,

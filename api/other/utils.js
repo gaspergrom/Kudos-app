@@ -70,7 +70,6 @@ module.exports = {
                 let employee = await employeeRouter.baseClass
                     .findOne({ slackId: user.id })
                     .populate('company')
-                    .populate('departments')
                     .exec();
     
                 if (employee == null || employee == undefined)
@@ -105,7 +104,6 @@ module.exports = {
         let employee = await employeeRouter.baseClass
             .findOne({ slackId: userData.id })
             .populate('company')
-            .populate('departments')
             .exec();
 
         let company = await companyRouter.baseClass

@@ -6,6 +6,12 @@ const departmentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'employee'
     },
+    members: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'employee'
+        }
+    ],
     slug: String
 });
 

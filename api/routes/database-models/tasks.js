@@ -1,7 +1,6 @@
 const
     name = 'task',
     pluralName = 'tasks',
-    employeeModel = require('../../models/employee'),
     taskModel = require('../../models/task'),
     BaseRouter = require('../base-router'),
     router = new BaseRouter(name, pluralName, ['assignedBy', 'assignedTo'], false);
