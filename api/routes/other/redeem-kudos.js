@@ -27,7 +27,7 @@ router.post(routePath, async (req, res) => {
             if (employee) {
                 if (redeemOption.amount <= employee.availableKudos) {
                     employee.availableKudos -= redeemOption.amount;
-                    await employeeModel.findByIdAndUpdate(employeeId, employee, { upsert: false }).exec((err, original) => {
+                    employeeModel.findByIdAndUpdate(employeeId, employee, { upsert: false }).exec((err, original) => {
                         if (err) {
                             console.error('Error when updating employee available token data during kudos redeem: ' + err);
                             res.json();
