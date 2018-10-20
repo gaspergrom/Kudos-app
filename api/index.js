@@ -28,6 +28,9 @@ const
 const
   slackKudos = require('./routes/commands/slack-kudos');
 
+const
+  events = require('./routes/events/events');
+
 // Import API Routes
 app.use(companies.router);
 app.use(employees.router);
@@ -37,6 +40,9 @@ app.use(kudosRequests.router);
 
 // Import login routes
 app.use(auth);
+
+// Import event routes
+app.use(events);
 
 // Import command routes
 app.use(slackKudos);
