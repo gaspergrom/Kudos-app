@@ -2,6 +2,7 @@ const
     CompanyModel = require('../../models/company'),
     EmployeeModel = require('../../models/employee'),
     DepartmentModel = require('../../models/department'),
+    // Utils = require('../../other/utils'),
     name = 'company',
     pluralName = 'companies',
     BaseRouter = require('../base-router'),
@@ -13,6 +14,9 @@ router.router.post('/' + pluralName + '/:id/departments', async (req, res) => {
         let company = await CompanyModel.findById(id);
         
         if (company) {
+            // if (req.body.title)
+            //     req.body.slug = Utils.generateSlug(req.body.title);
+
             DepartmentModel.create(req.body, (err, added) => {
                 if (err) {
                     console.error('Failed to create a department: ' + err);
@@ -31,13 +35,6 @@ router.router.post('/' + pluralName + '/:id/departments', async (req, res) => {
         }
         else
             res.json();
-    
-        data.exec((err, found) => {
-            if (err)
-                console.error('Error when fetching \'' + this.tag + '\' ID ' + id);
-    
-            res.json(found);
-        });
     }
     else
         res.json();

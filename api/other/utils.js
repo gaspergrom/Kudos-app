@@ -55,10 +55,10 @@ module.exports = {
      */
     processSlackWorkspace: async function (usersList, teamInfo) {
         if (usersList && teamInfo) {
-            let company = await companyRouter.baseClass
-                .findOne({ slackId: teamInfo.id })
-                .populate('departments')
-                .exec();
+            let companyQuery = companyRouter.baseClass.findOne({ slackId: teamInfo.id })
+                .populate('departments');
+            
+            let company = await companyQuery.exec();
             
             let employees = [];
     
@@ -67,11 +67,11 @@ module.exports = {
     
             for (let i in usersList) {
                 const user = usersList[i];
-                let employee = await employeeRouter.baseClass
-                    .findOne({ slackId: user.id })
+                let employeeQuery = employeeRouter.baseClass.findOne({ slackId: user.id })
                     .populate('company')
-                    .populate('departments')
-                    .exec();
+                    .populate('departments');
+                
+                let employee = await employeeQuery.exec();
     
                 if (employee == null || employee == undefined)
                     employee = await this.addEmployee(user, company._id);
