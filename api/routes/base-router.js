@@ -123,8 +123,13 @@ module.exports = class BaseRouter {
             this.router.patch('/' + this.baseRoute + '/:id', (req, res) => {
                 if (req.body) {
                     const id = req.params.id;
-    
-                    this.baseClass.findByIdAndUpdate(req.params.id, req.body, { upsert: false }, (err, original) => {
+                    let data = this.baseClass.findByIdAndUpdate(req.params.id, req.body, { upsert: false });
+
+                    if (populateFields)
+                        for (let i in populateFields)
+                            data.populate(populateFields[i]);
+                    
+                    data.exec((err, original) => {
                         if (err)
                             console.error('Error when patching \'' + this.tag + '\' ID ' + id + ' - problem when updating.');
                         else {
