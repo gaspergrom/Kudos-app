@@ -7,7 +7,7 @@ const
     BaseRouter = require('../base-router'),
     router = new BaseRouter(name, pluralName, false);
 
-router.router.get('/' + pluralName + '-options', (req, res) => {
+router.router.get('/' + pluralName + '/options', (req, res) => {
     res.json(conf.redeemOptions);
 });
 
