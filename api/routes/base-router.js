@@ -110,25 +110,15 @@ module.exports = class BaseRouter {
             if (req.body) {
                 const id = req.params.id;
 
-                this.baseClass.findById(id, (err, found) => {
-                    if (err) {
-                        console.error('Error when patching \'' + this.tag + '\' ID ' + id + ' - problem when searching.');
-                        res.json();
-                    }
+                this.baseClass.findByIdAndUpdate(req.params.id, req.body, { upsert: false }, (err, original) => {
+                    if (err)
+                        console.error('Error when patching \'' + this.tag + '\' ID ' + id + ' - problem when updating.');
                     else {
-                        const updated = Object.assign(found, req.body);
-
-                        this.baseClass.findOneAndUpdate({ '_id': req.params.id }, updated, { upsert: false }, (err, original) => {
-                            if (err)
-                                console.error('Error when patching \'' + this.tag + '\' ID ' + id + ' - problem when updating.');
-                            else {
-                                console.log('Updated a \'' + this.tag + '\' ID ' + id);
-                                this.emitEvent('patch', original);
-                            }
-
-                            res.json(original);
-                        });
+                        console.log('Updated a \'' + this.tag + '\' ID ' + id);
+                        this.emitEvent('patch', original);
                     }
+
+                    res.json(original);
                 });
             }
             else
