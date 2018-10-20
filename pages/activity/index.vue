@@ -1,7 +1,7 @@
 <template>
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
+        <div class="row flex--center">
+            <div class="col-md-8">
                 <div class="c-card" data-mh="dashboard3-cards">
                     <h4 v-if="$store.state.activity.activity.length>0">Activity</h4>
                     <h4 v-else>No activity</h4>

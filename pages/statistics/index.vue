@@ -6,75 +6,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
-                <div class="c-card" data-mh="dashboard3-cards">
-                    <h4>Leaderboard</h4>
-                    <p class="u-mb-medium">Employees with most kudos</p>
-
-                    <div class="o-line u-pb-small u-mb-small u-border-bottom">
-                        <div class="o-media">
-                            <div class="o-media__img u-mr-small">
-                                <div class="c-avatar c-avatar--xsmall">
-                                    <img class="c-avatar__img" src="http://via.placeholder.com/72" alt="Name">
-                                </div>
-                            </div>
-
-                            <div class="o-media__body">
-                                <h6>Justine Henderson</h6>
-                            </div>
-                        </div>
-
-                        <h6>150 k
-                            <span class="c-icon c-icon--warning u-mb-small" style="height: 30px; width: 30px;margin-bottom: 0;">
-                  <i class="feather icon-award"></i>
-                </span>
-                        </h6>
-                    </div>
-
-                    <div class="o-line u-pb-small u-mb-small u-border-bottom">
-                        <div class="o-media">
-                            <div class="o-media__img u-mr-small">
-                                <div class="c-avatar c-avatar--xsmall">
-                                    <img class="c-avatar__img" src="http://via.placeholder.com/72" alt="Name">
-                                </div>
-                            </div>
-
-                            <div class="o-media__body">
-                                <h6>Waylon Dalton</h6>
-                                <p>Pulse ltd</p>
-                            </div>
-                        </div>
-
-                        <h6>12 k
-                            <span class="c-icon c-icon--warning u-mb-small" style="height: 30px; width: 30px;margin-bottom: 0; background: #C0C0C0">
-                  <i class="feather icon-award"></i>
-                </span>
-                        </h6>
-                    </div>
-
-                    <div class="o-line u-pb-small u-mb-small u-border-bottom">
-                        <div class="o-media">
-                            <div class="o-media__img u-mr-small">
-                                <div class="c-avatar c-avatar--xsmall">
-                                    <img class="c-avatar__img" src="http://via.placeholder.com/72" alt="Name">
-                                </div>
-                            </div>
-
-                            <div class="o-media__body">
-                                <h6>Warren Hampton</h6>
-                                <p>Restful ltd</p>
-                            </div>
-                        </div>
-
-                        <h6>10 k
-                            <span class="c-icon c-icon--warning u-mb-small" style="height: 30px; width: 30px;margin-bottom: 0; background: #cd7f32">
-                  <i class="feather icon-award"></i>
-                </span>
-                        </h6>
-                    </div>
-
-                </div>
-            </div>
+            <statistics-leaderboard></statistics-leaderboard>
             <div class="col-xl-6">
                 <div class="c-card" data-mh="overview-cards">
                     <h4>Customers</h4>
@@ -170,7 +102,9 @@
 </template>
 
 <script>
+    import StatisticsLeaderboard from "../../components/statistics/leaderboard";
     export default {
+        components: {StatisticsLeaderboard}
     }
 </script>
 

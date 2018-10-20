@@ -85,9 +85,9 @@
                 }
                 this.invalid = false;
                 let form = this.add;
-                this.$axios.post("/departments", form)
+                this.$axios.post(`/company/${$store.state.auth.teamId}/departments`, form)
                     .then((res) => {
-                        console.log(res);
+                        console.log("POST::DEPARTMENT", res);
                         this.$v.$reset();
                         this.add = {
                             open: false,
