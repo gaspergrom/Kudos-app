@@ -112,7 +112,7 @@
                 this.sent=false;
                 let form = this.form;
                 form["from"] = this.$store.state.auth.userId;
-                this.$axios.post("/kudos-txs", form)
+                this.$axios.post("/transact-kudos", form)
                     .then((res) => {
                         this.$store.state.user.kudosToGive-=this.form.amount;
                         this.$v.$reset();

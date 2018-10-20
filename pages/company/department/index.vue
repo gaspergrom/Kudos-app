@@ -6,25 +6,8 @@
                     <input class="c-input" id="input1" type="search" placeholder="Search...">
                 </div>
             </div>
-            <div class="col-md-3">
-                <button class="c-btn c-btn--info" @click="add.open=true">Add new department</button>
-                <div class="c-modal modal fade" :style="{'display': add.open?'block':'none'}">
-                    <div class="c-modal__dialog modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="c-card u-p-medium u-mh-auto" style="max-width:500px;">
-                                <h3>Modal Title</h3>
-                                <p class="u-text-mute u-mb-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum similique, dolores dolorem perferendis inventore illum dicta. Nostrum, officiis alias distinctio deleniti aliquid eum dolorum sed fugit omnis molestias! Magnam, animi.</p>
-                                <button class="c-btn c-btn--info" data-dismiss="modal">
-                                    Ok, just close this modal
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <button class="c-btn c-btn--info">Upload json</button>
-            </div>
+            <departments-new></departments-new>
+            <departments-json></departments-json>
         </div>
         <div class="row">
             <div class="col-md-12" v-if="$store.state.companies.departments.length===0">
@@ -41,14 +24,13 @@
 </template>
 
 <script>
+    import {required} from "vuelidate/lib/validators";
+    import DepartmentsJson from "../../../components/departments/json";
+    import DepartmentsNew from "../../../components/departments/new";
+
     export default {
-        data: function () {
-            return {
-                add: {
-                    open: false,
-                }
-            }
-        }
+        components: {DepartmentsNew, DepartmentsJson},
+
     }
 </script>
 
