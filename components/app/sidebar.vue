@@ -24,6 +24,11 @@
                     </nuxt-link>
                 </li>
                 <li>
+                    <nuxt-link class="c-sidebar__link" to="/statistics" active-class="is-active" exact>
+                        <i class="c-sidebar__icon feather icon-bar-chart-2"></i>Statistics
+                    </nuxt-link>
+                </li>
+                <li>
                     <nuxt-link class="c-sidebar__link" to="/shop" active-class="is-active" exact>
                         <i class="c-sidebar__icon feather icon-shopping-cart"></i>Gift shop
                     </nuxt-link>

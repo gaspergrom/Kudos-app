@@ -1,7 +1,8 @@
 export default {
     state: {
-        name: "",
-        slug: "",
+        name: "Celtra",
+        slug: "celtra",
+        employees: [],
         departments: []
     },
 

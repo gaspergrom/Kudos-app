@@ -27,7 +27,7 @@
                     <p class="u-pb-small u-mb-small u-border-bottom">Facebook Inc.</p>
 
                     <p class="u-h4">
-                        150
+                        150 kudos
                     </p>
                 </div>
 
@@ -43,7 +43,7 @@
                     <p class="u-pb-small u-mb-small u-border-bottom">Google Inc.</p>
 
                     <p class="u-h4">
-                        150
+                        150 kudos
                     </p>
                 </div>
 
@@ -59,7 +59,7 @@
                     <p class="u-pb-small u-mb-small u-border-bottom">Pulse Inc.</p>
 
                     <p class="u-h4">
-                        150
+                        150 kudos
                     </p>
                 </div>
 
@@ -75,7 +75,7 @@
                     <p class="u-pb-small u-mb-small u-border-bottom">Path ltd.</p>
 
                     <p class="u-h4">
-                        150
+                        150 kudos
                     </p>
                 </div>
 
