@@ -26,7 +26,7 @@
         </div>
         <div class="row">
             <div class="col-sm-6 col-xl-3" v-for="member of members">
-                <div class="c-card is-animated u-text-center">
+                <nuxt-link :to="`/user/${member._id}`" class="c-card is-animated u-text-center block">
                     <div class="c-avatar u-inline-flex u-mb-small">
                         <img class="c-avatar__img" :src="member.imgPaths.image_72" alt="Clark">
                     </div>
@@ -36,7 +36,7 @@
                     <p class="u-h4">
                         {{member.receivedKudos}}
                     </p>
-                </div>
+                </nuxt-link>
             </div>
         </div>
     </div>

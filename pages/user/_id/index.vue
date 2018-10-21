@@ -9,87 +9,49 @@
                             <img class="c-avatar__img" src="http://via.placeholder.com/72" alt="Avatar">
                         </div>
 
-                        <h5>Johane Doeić</h5>
-                        <p>Lead Frontend Developer</p>
+                        <h5>{{user.realName || user.name }}</h5>
                     </div>
 
                     <span class="c-divider u-mv-small"></span>
 
                     <span class="c-text--subtitle text-center width100 block">Kudos received from you</span>
-                    <p class="u-mb-small u-text-large text-center">2</p>
+                    <p class="u-mb-small u-text-large text-center">{{sentKudos}}</p>
 
                     <span class="c-text--subtitle text-center width100 block">Kudos sent to you</span>
-                    <p class="u-mb-small u-text-large text-center">10</p>
+                    <p class="u-mb-small u-text-large text-center">{{receivedKudos}}</p>
                 </div>
             </div>
             <div class="col-md-7 flex--one">
                 <nav class="c-tabs height100 width100">
                     <div class="c-tabs__list nav nav-tabs" id="myTab" role="tablist">
-                        <div class="c-tabs__link active">Activity</div>
+                        <div class="c-tabs__link" :class="{'active': tabs===0}" @click="tabs=0">Activity</div>
+                        <div class="c-tabs__link" :class="{'active': tabs===1}" @click="tabs=1">Received</div>
+                        <div class="c-tabs__link" :class="{'active': tabs===2}" @click="tabs=2">Sent</div>
                     </div>
-                    <div class="c-tabs__content tab-content" id="nav-tabContent">
-                        <div class="c-tabs__pane active height100" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="c-tabs__content tab-content">
+                        <div class="c-tabs__pane height100" :class="{'active': tabs===0}">
                             <div class="c-feed">
-                                <div class="c-feed__item">
-                                    <div class="c-feed__item-content">
-                                        <h6 class="u-text-small">Add new payout method</h6>
-                                        <p>Added paypal as the default payout method</p>
-                                    </div>
-                                    <p class="u-text-xsmall">just now</p>
-                                </div>
-
-                                <div class="c-feed__item c-feed__item--success">
-                                    <div class="c-feed__item-content">
-                                        <h6 class="u-text-small">Payment received</h6>
-                                        <p>Cha-ching payment received from <a href="#">@client-22</a></p>
-                                    </div>
-                                    <p class="u-text-xsmall">30 mins ago</p>
-                                </div>
-
-                                <div class="c-feed__item">
-                                    <div class="c-feed__item-content">
-                                        <h6 class="u-text-small">Project Approved</h6>
-                                        <p>Added landing page design to finished projects</p>
-                                    </div>
-
-                                    <p class="u-text-xsmall">6 hours ago</p>
-                                </div>
-
-                                <div class="c-feed__item c-feed__item--fancy">
-                                    <div class="c-feed__item-content">
-                                        <h6 class="u-text-small">Project Approved</h6>
-                                        <p>Moved new charachter design to <a href="#">@adamslandler</a></p>
-                                    </div>
-                                    <p class="u-text-xsmall">2 Days ago</p>
-                                </div>
-
-                                <div class="c-feed__item c-feed__item--danger">
-                                    <div class="c-feed__item-content">
-                                        <h6 class="u-text-small">Project Approved</h6>
-                                        <p>Design was approved by Neat company</p>
-                                    </div>
-                                    <p class="u-text-xsmall">2 Days ago</p>
-                                </div>
-
-                                <div class="c-feed__item c-feed__item--warning">
-                                    <div class="c-feed__item-content">
-                                        <h6 class="u-text-small">Project Approved</h6>
-                                        <p>New order received from Canada by #49832</p>
-                                    </div>
-                                    <p class="u-text-xsmall">4 Days ago</p>
-                                </div>
-
-                                <div class="c-feed__item">
-                                    <div class="c-feed__item-content">
-                                        <h6 class="u-text-small">Project Approved</h6>
-                                        <p>New order received from Canada by #49832</p>
-                                    </div>
-                                    <p class="u-text-xsmall">5 Days ago</p>
+                                <div class="c-feed__item c-feed__item--info" v-for="activity of filterActivity">
+                                    <p>{{activity.from.realName || activity.from.name}} sent {{activity.amount}} kudos to {{activity.to.realName || activity.to.name}}</p>
                                 </div>
                             </div><!-- // .c-feed -->
                         </div>
-                        <div class="c-tabs__pane" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">ducimus quam fuga, vero atque, error laboriosam odio provident eveniet nemo reiciendis non optio, laborum enim ipsum dolorum, voluptatem ducimus quam fuga, vero atque, error laboriosam odio provident eveniet nemo!</div>
-                        <div class="c-tabs__pane" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">optio, laborum enim ipsum dolorum, voluptatem ducimus quam fuga, vero atque, error laboriosam odio provident eveniet nemo reicienoptio, laborum enim ipsum dolorum, voluptatem ducimus quam fuga, vero atque, error laboriosam odio provident eveniet nemo reicien</div>
+                        <div class="c-tabs__pane height100" :class="{'active': tabs===1}">
+                            <template v-for="from of received">
+                                <p class="u-mb-xsmall">{{from.user.realName || from.user.name}} ({{from.amount}})</p>
+                                <div class="c-progress c-progress--warning c-progress--medium u-mb-small">
+                                    <div class="c-progress__bar" :style="{'width':`${from.amount/received[0].amount*100}%`}"></div>
+                                </div>
+                            </template>
+                        </div>
+                        <div class="c-tabs__pane height100" :class="{'active': tabs===2}">
+                            <template v-for="to of sent">
+                                <p class="u-mb-xsmall">{{to.user.realName || to.user.name}} ({{to.amount}})</p>
+                                <div class="c-progress c-progress--warning c-progress--medium u-mb-small">
+                                    <div class="c-progress__bar" :style="{'width':`${to.amount/sent[0].amount*100}%`}"></div>
+                                </div>
+                            </template>
+                        </div>
                     </div>
                 </nav>
             </div>
@@ -99,6 +61,96 @@
 
 <script>
     export default {
+        data: function () {
+            return {
+                tabs: 0,
+                id: null,
+                user: {},
+                activity: []
+            }
+        },
+        watch: {
+            '$route'(to, from) {
+                this.id = this.$route.params.id;
+            }
+        },
+        computed: {
+            filterActivity: function () {
+                return this.$store.state.activity.activity.filter((val) => {
+                    return (val.from._id===this.$store.state.auth.userId && val.to._id===this.id) || (val.to._id===this.$store.state.auth.userId && val.from._id===this.id);
+                })
+            },
+            receivedKudos: function () {
+                let sum=0;
+                for(let i=0; i<this.filterActivity.length; i++){
+                    if(this.filterActivity[i].to._id===this.$store.state.auth.userId){
+                        sum+=this.filterActivity[i].amount
+                    }
+                }
+                return sum;
+            },
+            sentKudos: function () {
+                let sum=0;
+                for(let i=0; i<this.filterActivity.length; i++){
+                    if(this.filterActivity[i].from._id===this.$store.state.auth.userId){
+                        sum+=this.filterActivity[i].amount
+                    }
+                }
+                return sum;
+            },
+            received: function () {
+                let arr= this.$store.state.activity.activity.filter((val) => {
+                    return val.to._id===this.id;
+                });
+                let users={};
+                for(let i=0; i<arr.length; i++){
+                    if(arr[i].from._id in users){
+                        users[arr[i].from._id].amount+=arr[i].amount;
+                    }
+                    else{
+                        users[arr[i].from._id]={
+                            amount: arr[i].amount,
+                            user: arr[i].from
+                        }
+                    }
+                }
+                let fin=Object.values(users);//.sort((a,b) => (a.amount > b.amount) ? 1 : ((b.amount > a.amount) ? -1 : 0))
+                return fin.splice(0, 5)
+            },
+            sent: function () {
+                let arr= this.$store.state.activity.activity.filter((val) => {
+                    return val.from._id===this.id;
+                });
+                let users={};
+                for(let i=0; i<arr.length; i++){
+                    if(arr[i].to._id in users){
+                        users[arr[i].to._id].amount+=arr[i].amount;
+                    }
+                    else{
+                        users[arr[i].to._id]={
+                            amount: arr[i].amount,
+                            user: arr[i].to
+                        }
+                    }
+                }
+                let fin=Object.values(users);//.sort((a,b) => (a.amount > b.amount) ? 1 : ((b.amount > a.amount) ? -1 : 0));
+                return fin.splice(0, 5)
+            }
+        },
+        created() {
+            this.$store.commit("GET_ACTIVITY");
+            this.id = this.$route.params.id;
+            if (this.id === this.$store.state.auth.userId) {
+                this.$router.push("/user")
+            }
+            this.$axios.get(`/employees/${this.id}`)
+                .then((res) => {
+                    this.user = res.data;
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        },
     }
 </script>
 

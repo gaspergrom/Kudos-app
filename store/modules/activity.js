@@ -9,7 +9,13 @@ export default {
                 .then((res) => {
                     state.activity = res.data.reverse();
                 })
-        }
+        },
+
     },
-    gettes: {}
+    gettes: {
+        activityFiltered: function (state, other) {
+            return state.activity.filter((val)=>{
+            });
+        }
+    }
 }
