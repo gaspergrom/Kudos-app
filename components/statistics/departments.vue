@@ -1,5 +1,5 @@
 <template>
-    <div class="col-xl-6">
+    <div class="col-md-6">
         <div class="c-card" data-mh="overview-cards">
             <h4>Departments</h4>
             <p class="u-mb-medium"></p>

@@ -1,9 +1,9 @@
 <template>
-    <div class="c-card" data-mh="dashboard3-cards" v-if="$store.state.activity.activity.length>0">
+    <div class="c-card" data-mh="dashboard3-cards" v-if="filterActivity.length>0">
         <h4>Recent activity</h4>
         <br>
         <div class="o-line u-pb-small u-mb-small u-border-bottom"
-             v-for="activity in $store.state.activity.activity.slice(0, 5)">
+             v-for="activity in filterActivity.slice(0, 5)">
             <div class="o-media">
                 <div class="o-media__img u-mr-small">
                     <div class="c-avatar c-avatar--xsmall">
@@ -37,7 +37,14 @@
 
 <script>
     export default {
-        name: "index-activity"
+        name: "index-activity",
+        computed: {
+            filterActivity: function () {
+                return this.$store.state.activity.activity.filter((val) => {
+                    return val.from._id===this.$store.state.auth.userId || val.to._id===this.$store.state.auth.userId;
+                })
+            }
+        }
     }
 </script>
 

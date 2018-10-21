@@ -1,5 +1,4 @@
 <template>
-    <section style="background-image: url('/bg.png'); background-size:cover">
         <div class="container">
             <div class="row flex--center flex--middle vh100">
                 <div class="col-md-6">
@@ -10,7 +9,6 @@
                 </div>
             </div>
         </div>
-    </section>
 </template>
 
 <script>

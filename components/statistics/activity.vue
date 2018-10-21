@@ -1,5 +1,5 @@
 <template>
-    <div class="col-xl-5">
+    <div class="col-md-6">
         <div class="c-card">
             <h4>Latests Activity</h4>
 
