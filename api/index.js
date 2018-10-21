@@ -25,6 +25,7 @@ const
   kudosRedeems = require('./routes/database-models/kudos-redeems'),
   auth = require('./routes/auth/auth'),
   slackKudos = require('./routes/commands/slack-kudos'),
+  slackTask = require('./routes/commands/slack-task'),
   events = require('./routes/events/events');
 
 // Import API Routes
@@ -43,6 +44,7 @@ app.use(events);
 
 // Import command routes
 app.use(slackKudos);
+app.use(slackTask);
 
 // Export the server middleware
 module.exports = {
