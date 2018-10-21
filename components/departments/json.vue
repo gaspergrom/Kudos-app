@@ -70,6 +70,7 @@
                             open: false,
                             file: ""
                         };
+                        this.$store.commit("GET_COMPANIES", this.$store.auth.teamId, this.$store.state.auth);
                     })
                     .catch((err) => {
                         this.invalid = true;
