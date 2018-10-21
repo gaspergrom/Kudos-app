@@ -10,11 +10,12 @@
             <departments-json></departments-json>
         </div>
         <div class="row">
-            <div class="col-md-12" v-if="$store.state.companies.departments.length===0">
+            <div class="col-md-12" v-if="$store.state.companies.departments===[]">
                 <h2 class="text-center">You don't have any departments yet</h2>
             </div>
             <div class="col-sm-6 col-xl-3" v-for="department of filterDepartments">
-                <nuxt-link :to="`/company/department/${department.slug}`" class="c-card is-animated u-text-center block">
+                <nuxt-link :to="`/company/department/${department.slug}`"
+                           class="c-card is-animated u-text-center block">
                     <h4>{{department.title}}</h4>
                     <p>{{department.members.length}} members</p>
                 </nuxt-link>
@@ -30,14 +31,14 @@
 
     export default {
         components: {DepartmentsNew, DepartmentsJson},
-        data: function(){
+        data: function () {
             return {
                 search: "",
             }
         },
         computed: {
             filterDepartments: function () {
-                return this.$store.state.companies.departments.filter((value)=>{
+                return this.$store.state.companies.departments.filter((value) => {
                     return value.title.toLowerCase().includes(this.search.toLowerCase());
                 })
             }

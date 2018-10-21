@@ -30,11 +30,11 @@
                     <div class="c-avatar u-inline-flex u-mb-small">
                         <img class="c-avatar__img" :src="member.imgPaths.image_72" alt="Clark">
                     </div>
-                    <h4>{{member.realName}}</h4>
-                    <p class="u-pb-small u-mb-small u-border-bottom">Facebook Inc.</p>
+                    <h4>{{member.realName || member.name}}</h4>
+                    <p class="u-pb-small u-mb-small u-border-bottom"></p>
 
                     <p class="u-h4">
-                        150
+                        {{member.receivedKudos}}
                     </p>
                 </div>
             </div>
@@ -110,6 +110,7 @@
             })
                 .then((res)=>{
                     console.log(res);
+                    this.$store.commit("GET_COMPANIES", this.$store.auth.teamId, this.$store.state.auth);
                     next();
                 })
                 .catch((err)=>{
