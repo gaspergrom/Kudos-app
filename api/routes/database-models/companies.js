@@ -7,7 +7,7 @@ const
     name = 'company',
     pluralName = 'companies',
     BaseRouter = require('../base-router'),
-    router = new BaseRouter(name, pluralName, ['departments', 'members']);
+    router = new BaseRouter(name, pluralName, [{ path: 'departments', populate: { path: 'members' } }]);
 
 router.router.post('/' + pluralName + '/:id/departments', async (req, res) => {
     if (req && req.params && req.body && req.params.id) {
