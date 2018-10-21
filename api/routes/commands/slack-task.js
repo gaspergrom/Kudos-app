@@ -1,4 +1,5 @@
 const
+    rp = require('request-promise'),
     conf = require('../../../nuxt.config'),
     TaskModel = require('../../models/kudos-tx'),
     EmployeeModel = require('../../models/employee'),
@@ -35,7 +36,7 @@ router.post('/commands/task', async (req, res) => {
                     date: new Date().getTime()
                 };
         
-                await TaskModel.create(task);
+                await rp('/tasks', { method: 'POST', baseUrl: conf.axios.baseURL, json: true, body: task });
             }
             else {
                 msg = 'Could not send task request'

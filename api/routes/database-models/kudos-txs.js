@@ -10,7 +10,7 @@ router.setEventListener('post', (added) => {
     console.log('New kudos TX - TODO: notify involved user(s)');
 });
 
-processTx = async (req, res) => {
+router.router.post('/' + pluralName, async (req, res) => {
     if (req && req.body) {
         const fromId = req.body.from;
         const toId = req.body.to;
@@ -48,10 +48,6 @@ processTx = async (req, res) => {
     }
     else
         res.json();
-}
-
-router.router.post('/' + pluralName, async (req, res) => {
-    await this.processTx(req, res);
 });
 
 /**

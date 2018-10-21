@@ -1,4 +1,5 @@
 const
+    rp = require('request-promise'),
     conf = require('../../../nuxt.config'),
     KudosTxModel = require('../../models/kudos-tx'),
     EmployeeModel = require('../../models/employee'),
@@ -31,9 +32,9 @@ router.post('/commands/kudos', async (req, res) => {
                     date: new Date().getTime()
                 };
     
-                await KudosTxModel.create(kudosTx);
-                await EmployeeModel.findByIdAndUpdate(from._id, { kudosToGive: from.kudosToGive - amount });
-                await EmployeeModel.findByIdAndUpdate(to._id, { receivedKudos: to.receivedKudos + amount, availableKudos: to.availableKudos + amount });
+                await rp('/kudos-txs', { method: 'POST', baseUrl: conf.axios.baseURL, json: true, body: kudosTx });
+                // await rp('/employees/' + from,_id, { method: 'PATCH', baseUrl: conf.axios.baseURL, json: true, body: { kudosToGive: from.kudosToGive - amount } });
+                // await rp('/employees/' + to._id, { method: 'PATCH', baseUrl: conf.axios.baseURL, json: true, body: { receivedKudos: to.receivedKudos + amount, availableKudos: to.availableKudos + amount } });
             }
             else {
                 msg = 'You do not have enough kudos available';
