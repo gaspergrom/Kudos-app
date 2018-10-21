@@ -1,6 +1,7 @@
 const
     rp = require('request-promise'),
     EmployeeModel = require('../../models/employee'),
+    TaskRouter = require('../database-models/tasks'),
     TaskModel = require('../../models/task'),
     { Router } = require('express'),
     router = Router();
@@ -25,17 +26,27 @@ router.post('/events/interactive', async (req, res) => {
             };
 
             if (taskId != -1) {
-                TaskModel.findByIdAndUpdate(taskId, { state: 'running', assignedTo: employee, assignedDate: new Date().getTime() }, async (err, original) => {
-                    let msg;
-                    if (err)
-                        msg = 'Oops, something went wrong when assigning you to the task!';
-                    else
-                        msg = 'I have assigned you to the task!';
-                    
-                    rpBody.body.text = msg;
-                    await rp(rpBody);
-                    res.json();
-                });
+                TaskModel
+                    .findByIdAndUpdate(taskId, { state: 'running', assignedTo: employee, assignedDate: new Date().getTime() })
+                    .populate('assignedBy')
+                    .exec(async (err, original) => {
+                        let msg;
+                        if (err)
+                            msg = 'Oops, something went wrong when assigning you to the task!';
+                        else
+                            msg = 'I have assigned you to the task!';
+                        
+                        rpBody.body.text = msg;
+    
+                        // TODO: na lepši način
+                        original.state = 'running';
+                        original.assignedTo = employee;
+                        original.assignedDate = new Date().getTime()
+                        TaskRouter.emitEvent('patch', original);
+    
+                        await rp(rpBody);
+                        res.json();
+                    });
             }
             else {
                 rpBody.body.text = 'Okay, I declined the task for you.';

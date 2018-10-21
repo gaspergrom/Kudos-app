@@ -17,7 +17,7 @@ router.post('/commands/task', async (req, res) => {
     let msg;
     let attachmentMsg;
     if (toId && toId[1] == '@') { // Employee
-        if (amount && comment && comment.length <= conf.general.kudosCommentMaxLen) {
+        if (amount && amount > 0 && comment && comment.length <= conf.general.kudosCommentMaxLen) {
             const slackId = toId.substring(params[0].indexOf('@') + 1, params[0].indexOf('|'));
             
             if (slackId !== fromId) {

@@ -45,8 +45,21 @@ router.setEventListener('post', async (addedTask) => {
         console.warn('Could not notify users of new task - invalid task object.');
 });
 
-router.setEventListener('patch', (editedTask) => {
-    console.log('Task changed - notify involved users');
+router.setEventListener('patch', async (editedTask) => {
+    if (editedTask.state == 'running') {
+        const msg = {
+            text: '*' + (editedTask.assignedTo.realName ? editedTask.assignedTo.realName : editedTask.assignedTo.name) + '* has just *accepted* your task: ' + editedTask.comment
+        };
+
+        await Utils.sendMessageAsBot(editedTask.assignedBy.slackId, msg);
+    }
+    else if (editedTask.state == 'closed') {
+        const msg = {
+            text: '*' + (editedTask.assignedTo.realName ? editedTask.assignedTo.realName : editedTask.assignedTo.name) + '* has just *finished* your task: ' + editedTask.comment
+        };
+
+        await Utils.sendMessageAsBot(editedTask.assignedBy.slackId, msg);
+    }
 });
 
 router.router.post('/' + pluralName, async (req, res) => {

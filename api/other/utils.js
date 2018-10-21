@@ -248,7 +248,7 @@ module.exports = {
                 }
             }
             else
-                console.warn('Could not notify users of a new transaction - invalid response from im.open request: ' + res);
+                console.warn('Could not notify users of a new transaction - invalid response from im.open request: ' + JSON.stringify(res));
         }
         else
             console.warn('Could not notify users of a new transaction - invalid auth token');
