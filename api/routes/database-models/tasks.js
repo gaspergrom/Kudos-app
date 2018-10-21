@@ -1,12 +1,24 @@
 const
     name = 'task',
     pluralName = 'tasks',
+    Utils = require('../../other/utils'),
     taskModel = require('../../models/task'),
     BaseRouter = require('../base-router'),
     router = new BaseRouter(name, pluralName, ['assignedBy', 'assignedTo'], false);
 
-router.setEventListener('post', (addedTask) => {
-    console.log('New task - notify involved users');
+router.setEventListener('post', async (addedTask) => {
+    if (addedTask && addedTask.offeredTo) {
+        for (let i = 0; i < addedTask.offeredTo.length; i++) {
+            const employee = addedTask.offeredTo[i];
+            console.log(employee);
+            const accessToken = addedTask.assignedBy.accessToken ? addedTask.assignedBy.accessToken : employee.accessToken;
+            const text = '*' + (addedTask.assignedBy.realName ? addedTask.assignedBy.realName : addedTask.assignedBy.name) + '* has asked you to do a task for *' + addedTask.kudosReward + '* kudos: ' + addedTask.comment;
+
+            await Utils.sendMessageAsBot(employee.slackId, text);
+        }
+    }
+    else
+        console.warn('Could not notify users of new task - invalid task object.');
 });
 
 router.setEventListener('patch', (editedTask) => {

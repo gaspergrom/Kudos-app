@@ -19,26 +19,35 @@ router.post('/commands/task', async (req, res) => {
     if (toId && toId[1] == '@') { // Employee
         if (amount && comment && comment.length <= conf.general.kudosCommentMaxLen) {
             const slackId = toId.substring(params[0].indexOf('@') + 1, params[0].indexOf('|'));
-            const toEmployee = await EmployeeModel.findOne({ slackId: slackId });
-
-            if (toEmployee) {
-                msg = 'Successfully sent task request to *' + (toEmployee.realName ? toEmployee.realName : toEmployee.name) + '*';
-                attachmentMsg = 'The reward for completing this task is *' + amount + '* kudos!';
+            
+            if (slackId !== fromId) {
+                const toEmployee = await EmployeeModel.findOne({ slackId: slackId });
     
-                const task = {
-                    state: 'open',
-                    assignedBy: from._id,
-                    offeredTo: [ toEmployee._id ],
-                    kudosReward: amount,
-                    comment: comment,
-                    date: new Date().getTime()
-                };
+                if (toEmployee) {
+                    msg = 'Successfully sent task request to *' + (toEmployee.realName ? toEmployee.realName : toEmployee.name) + '*';
+                    attachmentMsg = 'The reward for completing this task is *' + amount + '* kudos!';
         
-                await rp('/tasks', { method: 'POST', baseUrl: conf.axios.baseURL, json: true, body: task });
+                    const task = {
+                        state: 'open',
+                        assignedBy: from,
+                        offeredTo: [ toEmployee ],
+                        kudosReward: amount,
+                        comment: comment,
+                        date: new Date().getTime()
+                    };
+            
+                    console.log('sending ');
+                    console.log(task);
+                    await rp('/tasks', { method: 'POST', baseUrl: conf.axios.baseURL, json: true, body: task });
+                }
+                else {
+                    msg = 'Could not send task request'
+                    attachmentMsg = 'The user you are trying to send kudos to might not exist.';
+                }
             }
             else {
-                msg = 'Could not send task request'
-                attachmentMsg = 'The user you are trying to send kudos to might not exist.';
+                msg = 'There was a problem sending kudos.';
+                attachmentMsg = 'You cannot send kudos to yourself!';
             }
         }
         else {

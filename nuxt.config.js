@@ -57,7 +57,9 @@ module.exports = {
         slackTeamInfoUrl: 'https://slack.com/api/team.info',
         slackOAuthAccessUrl: 'https://slack.com/api/oauth.access',
         slackImOpenUrl: 'https://slack.com/api/im.open',
-        slackPostMessageUrl: 'https://slack.com/api/chat.postMessage'
+        slackPostMessageUrl: 'https://slack.com/api/chat.postMessage',
+        slackCloseChannelUrl: 'https://slack.com/api/im.close',
+        slackBotHookUrl: 'https://da-ting-goes-skra.slack.com/services/hooks/slackbot'
     },
     general: {
         startingAvailableKudos: 0,
@@ -68,6 +70,7 @@ module.exports = {
     slackWorkspaceData: {
         clientId: '373180051559.455692683652',
         clientSecret: '50afe6cdc4267f22c91f5aea5a5a256a',
+        appAccessToken: 'xoxb-373180051559-461848363127-knrT2bGcjXNRsyIAH6Orkios',
         redirectUri: 'http://localhost:3000/slack'
         // redirectUri: 'https://kudos-app-celtra.herokuapp.com/slack'
     },

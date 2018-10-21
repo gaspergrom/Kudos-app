@@ -1,13 +1,20 @@
 const
     name = 'kudos-tx',
     pluralName = 'kudos-txs',
+    Utils = require('../../other/utils'),
     employeeModel = require('../../models/employee'),
+    companyModel = require('../../models/company'),
     kudosTxModel = require('../../models/kudos-tx'),
     BaseRouter = require('../base-router'),
     router = new BaseRouter(name, pluralName, ['from', 'to'], false);
 
-router.setEventListener('post', (addedTx) => {
-    console.log('New kudos TX - TODO: notify involved user(s)');
+router.setEventListener('post', async (addedTx) => {
+    const company = await companyModel.findById(addedTx.from.company ? addedTx.from.company : addedTx.to.company);
+    const fromName = (addedTx.from.realName ? addedTx.from.realName : addedTx.from.name);
+    const toName = (addedTx.to.realName ? addedTx.to.realName : addedTx.to.name);
+    const text = 'Great job, ' + toName + '! *' + fromName + '* has given you *' + addedTx.amount + '* kudos with a comment: ' + addedTx.comment;
+
+    await Utils.sendMessageAsBot(addedTx.to.slackId, text);
 });
 
 router.router.post('/' + pluralName, async (req, res) => {

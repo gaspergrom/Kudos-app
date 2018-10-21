@@ -9,7 +9,8 @@ const companySchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'department'
         }
-    ]
+    ],
+    accessToken: String
 });
 
 module.exports = mongoose.model('company', companySchema);

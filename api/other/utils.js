@@ -54,7 +54,16 @@ module.exports = {
      * @param {*} dmUserId Slack ID of the user to open a DM channel with
      */
     constructPostMessageRequestUrl: function (userToken, channel, text) {
-        return conf.uris.slackPostMessageUrl + '?token=' + userToken + '&channel=' + channel + '&text=' + text + '&pretty=1';
+        return conf.uris.slackPostMessageUrl + '?token=' + userToken + '&channel=' + channel + '&as_user=false' + '&text=' + text;
+    },
+
+    /**
+     * Constructs the request URL for closing a DM channel as a bot
+     * @param {*} accessToken The access token to fetch the data for
+     * @param {*} channel Channel to close
+     */
+    constructCloseChannelRequestUrl: function (accessToken, channel) {
+        return conf.uris.slackCloseChannelUrl + '?token=' + accessToken + '&channel=' + channel + '&pretty=1';
     },
 
     /**
@@ -64,7 +73,7 @@ module.exports = {
      * @param {*} usersList List of users in the Slack workspace
      * @param {*} teamInfo Info about the Slack workspace
      */
-    processSlackWorkspace: async function (usersList, teamInfo) {
+    processSlackWorkspace: async function (accessToken, usersList, teamInfo) {
         if (usersList && teamInfo) {
             let company = await companyRouter.baseClass
                 .findOne({ slackId: teamInfo.id })
@@ -75,6 +84,11 @@ module.exports = {
     
             if (company == null || company == undefined)
                 company = await this.addCompany(teamInfo);
+            
+            if (company.accessToken !== accessToken) {
+                company.accessToken = accessToken;
+                await companyRouter.baseClass.findOneAndUpdate({ slackId: teamInfo.id }, { accessToken: accessToken }).exec();
+            }
     
             for (let i in usersList) {
                 const user = usersList[i];
@@ -111,7 +125,7 @@ module.exports = {
      * @param {*} userData Slack user data
      * @param {*} teamData Slack team data
      */
-    processSlackUser: async function (userData, teamData) {
+    processSlackUser: async function (accessToken, userData, teamData) {
         let employee = await employeeRouter.baseClass
             .findOne({ slackId: userData.id })
             .populate('company')
@@ -124,6 +138,11 @@ module.exports = {
 
         if (employee == null || employee == undefined)
             employee = await this.addEmployee(userData, company ? company._id : null);
+
+        if (employee.accessToken !== accessToken) {
+            employee.accessToken = accessToken;
+            await employeeRouter.baseClass.findOneAndUpdate({ slackId: userData.id }, { accessToken: accessToken }).exec();
+        }
 
         return {
             authType: 'employee',
@@ -189,6 +208,32 @@ module.exports = {
             };
         else
             return [];
+    },
+
+    /**
+     * Sends a message as a bot
+     * @param {*} accessToken The access token to use for bot access
+     * @param {*} toSlackId Slack Id of the user to send the text to
+     * @param {*} text Text to send
+     */
+    sendMessageAsBot: async function (toSlackId, text) {
+        const accessToken = conf.slackWorkspaceData.appAccessToken;
+
+        if (accessToken) {
+            const imUrl = this.constructImOpenRequestUrl(accessToken, toSlackId);
+            const res = JSON.parse(await rp({ method: 'POST', uri: imUrl }));
+
+            if (res && res.ok == true && res.channel && res.channel.id) {
+                const channel = res.channel.id;
+                const msgUrl = this.constructPostMessageRequestUrl(accessToken, channel, text);
+
+                await rp({ method: 'POST', uri: msgUrl });
+            }
+            else
+                console.warn('Could not notify users of a new transaction - invalid response from im.open request: ' + res);
+        }
+        else
+            console.warn('Could not notify users of a new transaction - invalid auth token');
     },
 
     /**

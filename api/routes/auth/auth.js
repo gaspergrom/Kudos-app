@@ -1,7 +1,7 @@
 const
     { Router } = require('express'),
-    rp = require('request-promise'),
     Utils = require('../../other/utils'),
+    rp = require('request-promise'),
     router = Router();
 
 router.get('/auth', (req, res) => {
@@ -16,7 +16,7 @@ router.get('/auth', (req, res) => {
 
                     switch (req.query.state) {
                         case 'user':
-                            const user = await Utils.processSlackUser(tokenData.user, tokenData.team);
+                            const user = await Utils.processSlackUser(accessToken, tokenData.user, tokenData.team);
 
                             res.json(user);
                             break;
@@ -25,7 +25,7 @@ router.get('/auth', (req, res) => {
                             const teamInfoUrl = Utils.constructTeamInfoRequestUrl(accessToken);
                             const usersList = JSON.parse(await rp(usersListUrl)).members;
                             const teamInfo = JSON.parse(await rp(teamInfoUrl)).team;
-                            const workspace = await Utils.processSlackWorkspace(usersList, teamInfo);
+                            const workspace = await Utils.processSlackWorkspace(accessToken, usersList, teamInfo);
 
                             res.json(workspace);
                             break;

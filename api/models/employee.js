@@ -20,7 +20,8 @@ const employeeSchema = new mongoose.Schema({
     roles: [String],
     availableKudos: Number,
     kudosToGive: Number,
-    receivedKudos: Number
+    receivedKudos: Number,
+    accessToken: String
 });
 
 module.exports = mongoose.model('employee', employeeSchema);
