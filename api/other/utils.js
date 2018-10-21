@@ -40,6 +40,24 @@ module.exports = {
     },
 
     /**
+     * Constructs the request URL for opening a DM channel as a bot
+     * @param {*} userToken The access token to fetch the data for
+     * @param {*} dmUserId Slack ID of the user to open a DM channel with
+     */
+    constructImOpenRequestUrl: function (userToken, dmUserId) {
+        return conf.uris.slackImOpenUrl + '?token=' + userToken + '&user=' + dmUserId + '&pretty=1';
+    },
+
+    /**
+     * Constructs the request URL for opening a DM channel as a bot
+     * @param {*} userToken The access token to fetch the data for
+     * @param {*} dmUserId Slack ID of the user to open a DM channel with
+     */
+    constructPostMessageRequestUrl: function (userToken, channel, text) {
+        return conf.uris.slackPostMessageUrl + '?token=' + userToken + '&channel=' + channel + '&text=' + text + '&pretty=1';
+    },
+
+    /**
      * Processes the received workspace from the access token
      * Adds the received workspace and members to the database if they don't exist
      * Returns the company, and all of its employees

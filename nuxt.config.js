@@ -55,7 +55,9 @@ module.exports = {
         slackIdentityUrl: 'https://slack.com/api/users.identity',
         slackUsersListUrl: 'https://slack.com/api/users.list',
         slackTeamInfoUrl: 'https://slack.com/api/team.info',
-        slackOAuthAccessUrl: 'https://slack.com/api/oauth.access'
+        slackOAuthAccessUrl: 'https://slack.com/api/oauth.access',
+        slackImOpenUrl: 'https://slack.com/api/im.open',
+        slackPostMessageUrl: 'https://slack.com/api/chat.postMessage'
     },
     general: {
         startingAvailableKudos: 0,

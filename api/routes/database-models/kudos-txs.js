@@ -6,7 +6,7 @@ const
     BaseRouter = require('../base-router'),
     router = new BaseRouter(name, pluralName, ['from', 'to'], false);
 
-router.setEventListener('post', (added) => {
+router.setEventListener('post', (addedTx) => {
     console.log('New kudos TX - TODO: notify involved user(s)');
 });
 

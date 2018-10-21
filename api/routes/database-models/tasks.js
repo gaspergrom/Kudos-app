@@ -5,11 +5,11 @@ const
     BaseRouter = require('../base-router'),
     router = new BaseRouter(name, pluralName, ['assignedBy', 'assignedTo'], false);
 
-router.setEventListener('post', (added) => {
+router.setEventListener('post', (addedTask) => {
     console.log('New task - notify involved users');
 });
 
-router.setEventListener('patch', (edited) => {
+router.setEventListener('patch', (editedTask) => {
     console.log('Task changed - notify involved users');
 });
 

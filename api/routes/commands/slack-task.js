@@ -1,9 +1,7 @@
 const
     rp = require('request-promise'),
     conf = require('../../../nuxt.config'),
-    TaskModel = require('../../models/kudos-tx'),
     EmployeeModel = require('../../models/employee'),
-    DepartmentModel = require('../../models/department'),
     { Router } = require('express'),
     router = Router();
 
