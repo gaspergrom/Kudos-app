@@ -11,8 +11,14 @@ const
 router.setEventListener('post', async (addedTx) => {
     const fromName = (addedTx.from.realName ? addedTx.from.realName : addedTx.from.name);
     const toName = (addedTx.to.realName ? addedTx.to.realName : addedTx.to.name);
+    const amount = addedTx.to.availableKudos;
     const msg = {
-        text: "Great job, " + toName + "! *" + fromName + "* has given you *" + addedTx.amount + "* kudos with a comment: " + addedTx.comment
+        text: 'Great job, ' + toName + '! *' + fromName + '* has given you *' + addedTx.amount + '* kudos with a comment: ' + addedTx.comment,
+        attachments: [
+            {
+                text: amount + addedTx.amount > 10 ? 'You have enough kudos to claim some gifts. Check out our web app to redeem them.' : ''
+            }
+        ]
     };
 
     await Utils.sendMessageAsBot(addedTx.to.slackId, msg);
