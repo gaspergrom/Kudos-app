@@ -48,7 +48,8 @@ module.exports = {
         }
     },
     databaseConfig: {
-         url: 'mongodb://127.0.0.1:27017'
+        //  url: 'mongodb://127.0.0.1:27017'
+        url: 'mongodb://heroku_w4phfnbf:mdrjpkmcd07fi6d7ukaunu2dfd@ds237373.mlab.com:37373/heroku_w4phfnbf'
         //url: 'mongodb://ds237373.mlab.com:37373/heroku_w4phfnbf'
     },
     uris: {
