@@ -71,9 +71,8 @@ module.exports = {
         clientId: '373180051559.455692683652',
         clientSecret: '50afe6cdc4267f22c91f5aea5a5a256a',
         appAccessToken: 'xoxb-373180051559-461848363127-knrT2bGcjXNRsyIAH6Orkios',
-        // redirectUri: 'http://localhost:3000/slack'
-        redirectUri: 'http://52307b2e.ngrok.io'
-        // redirectUri: 'https://kudos-app-celtra.herokuapp.com/slack'
+        redirectUri: 'http://localhost:3000/slack'
+        // redirectUri: 'http://52307b2e.ngrok.io'
     },
     redeemOptions: [
         {

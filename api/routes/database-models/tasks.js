@@ -94,8 +94,12 @@ router.router.patch('/' + pluralName + '/:id', async (req, res) => {
             .exec((err, original) => {
                 if (err)
                     console.error('Failed to update a task: ' + err);
-                else
-                    router.emitEvent('patch', req.body);
+                else {
+                    // TODO: na lepše
+                    const newObj = Object.assign(original, req.body);
+                    console.log(newObj);
+                    router.emitEvent('patch', newObj);
+                }
                 
                 res.json(req.body);
             });
