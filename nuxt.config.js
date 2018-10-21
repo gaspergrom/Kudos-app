@@ -60,7 +60,8 @@ module.exports = {
     general: {
         startingAvailableKudos: 0,
         startingKudosToGive: 100,
-        startingReceivedKudos: 0
+        startingReceivedKudos: 0,
+        kudosCommentMaxLen: 70
     },
     slackWorkspaceData: {
         clientId: '373180051559.455692683652',
@@ -92,7 +93,7 @@ module.exports = {
         {
             title: 'Udemy 10$ gift card',
             amount: 20,
-            imgPath: 'https://imgur.com/a/69hLvc7'
+            imgPath: 'https://i.imgur.com/phIKTbA.png'
         }
     ],
     serverMiddleware: [

@@ -1,4 +1,6 @@
 const
+    rp = require('request-promise'),
+    conf = require('../../../nuxt.config'),
     KudosTxModel = require('../../models/kudos-tx'),
     EmployeeModel = require('../../models/employee'),
     { Router } = require('express'),
@@ -17,25 +19,31 @@ router.post('/commands/kudos', async (req, res) => {
     let msg;
     let attachmentMsg;
     if (from && to && amount && amount.constructor == Number) {
-        if (from.kudosToGive >= amount) {
-            msg = 'Sending ' + amount + ' kudos to ' + (to.realName ? to.realName : to.name) + ': ' + comment;
-            attachmentMsg = 'You can give away *' + (from.kudosToGive - amount) + '* more kudos!';
-
-            const kudosTx = {
-                from: from._id,
-                to: to._id,
-                amount: amount,
-                comment: comment,
-                date: new Date().getTime()
-            };
-
-            await KudosTxModel.create(kudosTx);
-            await EmployeeModel.findByIdAndUpdate(from._id, { kudosToGive: from.kudosToGive - amount });
-            await EmployeeModel.findByIdAndUpdate(to._id, { receivedKudos: to.receivedKudos + amount, availableKudos: to.availableKudos + amount });
+        if (comment && comment.length < conf.general.kudosCommentMaxLen) {
+            if (from.kudosToGive >= amount) {
+                msg = 'Sending *' + amount + '* kudos to *' + (to.realName ? to.realName : to.name) + '*: ' + comment;
+                attachmentMsg = 'You can give away *' + (from.kudosToGive - amount) + '* more kudos!';
+    
+                const kudosTx = {
+                    from: from._id,
+                    to: to._id,
+                    amount: amount,
+                    comment: comment,
+                    date: new Date().getTime()
+                };
+    
+                await rp('/kudos-txs', { method: 'POST', baseUrl: conf.axios.baseURL, json: true, body: kudosTx });
+                // await rp('/employees/' + from,_id, { method: 'PATCH', baseUrl: conf.axios.baseURL, json: true, body: { kudosToGive: from.kudosToGive - amount } });
+                // await rp('/employees/' + to._id, { method: 'PATCH', baseUrl: conf.axios.baseURL, json: true, body: { receivedKudos: to.receivedKudos + amount, availableKudos: to.availableKudos + amount } });
+            }
+            else {
+                msg = 'You do not have enough kudos available';
+                attachmentMsg =  'You have *' + from.kudosToGive + '* kudos to give away';
+            }
         }
         else {
-            msg = 'You do not have enough kudos available';
-            attachmentMsg =  'You have *' + from.kudosToGive + '* kudos to give away';
+            msg = 'There was a problem sending kudos.';
+            attachmentMsg = 'Your comment is too long (max *' + conf.general.kudosCommentMaxLen + '* characters)!';
         }
     }
     else {
