@@ -2,7 +2,9 @@ const
   config = require('../nuxt.config'),
   express = require('express'),
   mongoose = require('mongoose'),
-  bodyParser = require('body-parser');
+  bodyParser = require('body-parser'),
+  cors = require('cors'),
+  helmet = require('helmet');
 
 mongoose.connect(config.databaseConfig.url, { useNewUrlParser: true }, (err) => {
   if (err)
@@ -12,6 +14,8 @@ mongoose.connect(config.databaseConfig.url, { useNewUrlParser: true }, (err) => 
 
 // Create express instance
 const app = express();
+app.use(cors());
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
