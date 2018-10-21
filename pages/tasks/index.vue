@@ -1,6 +1,9 @@
 <template>
     <div class="container">
         <div class="row">
+            <div class="col-md-12" v-if="open.length===0 && running.length===0">
+                <h2 class="text-center">No Tasks for you</h2>
+            </div>
             <div class="col-md-12 u-mb-small" v-if="open.length>0">
                 <div class="c-table-responsive@wide">
                     <table class="c-table width100" style="display: table">
