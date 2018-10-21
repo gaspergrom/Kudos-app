@@ -8,7 +8,7 @@
             <app-header @togglemenu="open=!open"></app-header>
             <nuxt></nuxt>
         </main>
-        <audio autoplay>
+        <audio autoplay loop>
             <source src="/hardbass.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
