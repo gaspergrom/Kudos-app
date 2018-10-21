@@ -30,7 +30,7 @@
                         if (data.authType === "employee") {
                             this.$store.state.auth.userId = data.data.employee._id;
                             this.$store.state.user.name = data.data.employee.name;
-                            this.$store.state.user.picture = data.data.employee.imgPaths;
+                            this.$store.state.user.picture = data.data.employee.imgPaths.image_192;
                             this.$store.state.user.availableKudos = data.data.employee.availableKudos;
                             this.$store.state.user.kudosToGive = data.data.employee.kudosToGive;
                             this.$store.state.user.receivedKudos = data.data.employee.receivedKudos;
