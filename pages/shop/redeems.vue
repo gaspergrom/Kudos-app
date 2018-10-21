@@ -78,7 +78,6 @@
             this.$store.commit("GET_SHOP")
         },
         beforeRouteLeave: (to, from, next) => {
-            alert("saving");
             next();
         },
         methods: {
