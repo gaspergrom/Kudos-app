@@ -33,6 +33,8 @@ router.router.post('/' + pluralName, async (req, res) => {
                 kudosTxModel.create(kudosTx, async (err, added) => {
                     if (err)
                         console.error('Failed to process a kudos transaction: ' + err);
+                    else
+                        router.emitEvent('post', added);
                     
                     await employeeModel.findByIdAndUpdate(fromId, { kudosToGive: from.kudosToGive - amount });
                     await employeeModel.findByIdAndUpdate(toId, { receivedKudos: to.receivedKudos + amount, availableKudos: to.availableKudos + amount });

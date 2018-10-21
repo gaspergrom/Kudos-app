@@ -12,7 +12,7 @@ module.exports = class BaseRouter {
         this.eventListeners = {
             'post': (added) => { }, // params: the newly added entry
             'delete': (deleted) => { }, // params: the deleted entry
-            'patch': (original) => { } // params: the original entry before edit,
+            'patch': (edited) => { } // params: the original entry before edit,
         };
 
         this.sortRoutes(populateFields, advanced);
@@ -142,7 +142,7 @@ module.exports = class BaseRouter {
                             console.error('Error when patching \'' + this.tag + '\' ID ' + id + ' - problem when updating.');
                         else {
                             console.log('Updated a \'' + this.tag + '\' ID ' + id);
-                            this.emitEvent('patch', original);
+                            this.emitEvent('patch', req.body);
                         }
     
                         res.json(original);

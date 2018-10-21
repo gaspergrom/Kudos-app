@@ -5,6 +5,14 @@ const
     BaseRouter = require('../base-router'),
     router = new BaseRouter(name, pluralName, ['assignedBy', 'assignedTo'], false);
 
+router.setEventListener('post', (added) => {
+    console.log('New task - notify involved users');
+});
+
+router.setEventListener('patch', (edited) => {
+    console.log('Task changed - notify involved users');
+});
+
 router.router.post('/' + pluralName, async (req, res) => {
     if (req && req.body) {
         req.body.state = 'open';
@@ -13,6 +21,8 @@ router.router.post('/' + pluralName, async (req, res) => {
         taskModel.create(req.body, (err, added) => {
             if (err)
                 console.error('Error when trying to create a task: ' + err);
+            else
+                router.emitEvent('post', added);
             
             res.json(added);
         });
@@ -33,6 +43,8 @@ router.router.patch('/' + pluralName + '/:id', async (req, res) => {
             .exec((err, original) => {
                 if (err)
                     console.error('Failed to update a task: ' + err);
+                else
+                    router.emitEvent('patch', req.body);
                 
                 res.json(req.body);
             });
