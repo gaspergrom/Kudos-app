@@ -10,11 +10,35 @@ router.setEventListener('post', async (addedTask) => {
     if (addedTask && addedTask.offeredTo) {
         for (let i = 0; i < addedTask.offeredTo.length; i++) {
             const employee = addedTask.offeredTo[i];
-            console.log(employee);
-            const accessToken = addedTask.assignedBy.accessToken ? addedTask.assignedBy.accessToken : employee.accessToken;
-            const text = '*' + (addedTask.assignedBy.realName ? addedTask.assignedBy.realName : addedTask.assignedBy.name) + '* has asked you to do a task for *' + addedTask.kudosReward + '* kudos: ' + addedTask.comment;
+            const msg = {
+                text: '*' + (addedTask.assignedBy.realName ? addedTask.assignedBy.realName : addedTask.assignedBy.name) + '* has asked you to do a task for *' + addedTask.kudosReward + '* kudos: ' + addedTask.comment,
+                attachments: [
+                    {
+                        "text": "Would you like to accept the task?",
+                        "fallback": "You are unable to choose a game",
+                        "callback_id": "wopr_game",
+                        "color": "#3AA3E3",
+                        "attachment_type": "default",
+                        "actions": [
+                            {
+                                "name": "decision",
+                                "text": "Yes, I'll do it",
+                                "type": "button",
+                                "value": "true"
+                            },
+                            {
+                                "name": "decision",
+                                "text": "I can't do it right now",
+                                "style": "danger",
+                                "type": "button",
+                                "value": "false"
+                            }
+                        ]
+                    }
+                ]
+            };
 
-            await Utils.sendMessageAsBot(employee.slackId, text);
+            await Utils.sendMessageAsBot(employee.slackId, msg);
         }
     }
     else
@@ -34,7 +58,7 @@ router.router.post('/' + pluralName, async (req, res) => {
             if (err)
                 console.error('Error when trying to create a task: ' + err);
             else
-                router.emitEvent('post', added);
+                router.emitEvent('post', req.body);
             
             res.json(added);
         });

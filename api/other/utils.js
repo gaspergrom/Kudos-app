@@ -53,8 +53,9 @@ module.exports = {
      * @param {*} userToken The access token to fetch the data for
      * @param {*} dmUserId Slack ID of the user to open a DM channel with
      */
-    constructPostMessageRequestUrl: function (userToken, channel, text) {
-        return conf.uris.slackPostMessageUrl + '?token=' + userToken + '&channel=' + channel + '&as_user=false' + '&text=' + text;
+    constructPostMessageRequestUrl: function (userToken, channel) {
+        // return conf.uris.slackPostMessageUrl + '?token=' + userToken + '&channel=' + channel + '&as_user=false';
+        return conf.uris.slackPostMessageUrl;// + '?token=' + userToken + '&channel=' + channel + '&as_user=false';
     },
 
     /**
@@ -225,9 +226,26 @@ module.exports = {
 
             if (res && res.ok == true && res.channel && res.channel.id) {
                 const channel = res.channel.id;
-                const msgUrl = this.constructPostMessageRequestUrl(accessToken, channel, text);
+                const msgUrl = this.constructPostMessageRequestUrl(accessToken, channel);
 
-                await rp({ method: 'POST', uri: msgUrl });
+                text.channel = channel;
+                const msgRes = await rp({ 
+                    method: 'POST',
+                    uri: msgUrl,
+                    auth: {
+                        'bearer': accessToken
+                    },
+                    headers: {
+                        'Content-type': 'application/json; charset=utf-8'
+                    },
+                    body: text,
+                    json: true
+                });
+
+                if (msgRes.ok == false) {
+                    console.warn('Warning when sending message as bot: ');
+                    console.warn(msgRes);
+                }
             }
             else
                 console.warn('Could not notify users of a new transaction - invalid response from im.open request: ' + res);

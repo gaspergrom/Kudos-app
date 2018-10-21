@@ -28,16 +28,14 @@ router.post('/commands/task', async (req, res) => {
                     attachmentMsg = 'The reward for completing this task is *' + amount + '* kudos!';
         
                     const task = {
-                        state: 'open',
+                        state: "open",
                         assignedBy: from,
                         offeredTo: [ toEmployee ],
                         kudosReward: amount,
                         comment: comment,
                         date: new Date().getTime()
                     };
-            
-                    console.log('sending ');
-                    console.log(task);
+
                     await rp('/tasks', { method: 'POST', baseUrl: conf.axios.baseURL, json: true, body: task });
                 }
                 else {
