@@ -98,7 +98,7 @@
                             title: "",
                             manager: ""
                         };
-                        this.$store.commit("GET_COMPANIES", this.$store.auth.teamId, this.$store.state.auth);
+                        this.$store.commit("GET_COMPANIES", teamId, this.$store.state.auth);
                     })
                     .catch((err) => {
                         this.invalid = true;

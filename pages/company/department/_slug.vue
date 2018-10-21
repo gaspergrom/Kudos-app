@@ -104,18 +104,16 @@
         created() {
             this.slug = this.$route.params.slug;
         },
-        beforeRouteLeave(to, from, next){
+        beforeDestroy(to, from, next){
             this.$axios.patch(`/departments/${this.department._id}`, {
                 members: this.memberIds
             })
                 .then((res)=>{
                     console.log(res);
                     this.$store.commit("GET_COMPANIES", this.$store.auth.teamId, this.$store.state.auth);
-                    next();
                 })
                 .catch((err)=>{
                     console.log(err);
-                    next();
                 })
         }
     }
