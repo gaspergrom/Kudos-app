@@ -26,7 +26,8 @@ const
   auth = require('./routes/auth/auth'),
   slackKudos = require('./routes/commands/slack-kudos'),
   slackTask = require('./routes/commands/slack-task'),
-  events = require('./routes/events/events');
+  events = require('./routes/events/events')
+  eventsInteractive = require('./routes/events/interactive');
 
 // Import API Routes
 app.use(companies.router);
@@ -41,6 +42,7 @@ app.use(auth);
 
 // Import event routes
 app.use(events);
+app.use(eventsInteractive);
 
 // Import command routes
 app.use(slackKudos);

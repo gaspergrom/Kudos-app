@@ -15,8 +15,8 @@ router.setEventListener('post', async (addedTask) => {
                 attachments: [
                     {
                         "text": "Would you like to accept the task?",
-                        "fallback": "You are unable to choose a game",
-                        "callback_id": "wopr_game",
+                        "fallback": "You are unable to make a decision on this task.",
+                        "callback_id": "task_decision",
                         "color": "#3AA3E3",
                         "attachment_type": "default",
                         "actions": [
@@ -24,14 +24,14 @@ router.setEventListener('post', async (addedTask) => {
                                 "name": "decision",
                                 "text": "Yes, I'll do it",
                                 "type": "button",
-                                "value": "true"
+                                "value": addedTask._id
                             },
                             {
                                 "name": "decision",
                                 "text": "I can't do it right now",
                                 "style": "danger",
                                 "type": "button",
-                                "value": "false"
+                                "value": -1
                             }
                         ]
                     }
@@ -57,8 +57,10 @@ router.router.post('/' + pluralName, async (req, res) => {
         taskModel.create(req.body, (err, added) => {
             if (err)
                 console.error('Error when trying to create a task: ' + err);
-            else
+            else {
+                req.body._id = added._id;
                 router.emitEvent('post', req.body);
+            }
             
             res.json(added);
         });
