@@ -60,7 +60,8 @@ module.exports = {
     general: {
         startingAvailableKudos: 0,
         startingKudosToGive: 100,
-        startingReceivedKudos: 0
+        startingReceivedKudos: 0,
+        kudosCommentMaxLen: 70
     },
     slackWorkspaceData: {
         clientId: '373180051559.455692683652',

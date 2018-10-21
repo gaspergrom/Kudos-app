@@ -1,4 +1,5 @@
 const
+    conf = require('../../../nuxt.config'),
     TaskModel = require('../../models/kudos-tx'),
     EmployeeModel = require('../../models/employee'),
     DepartmentModel = require('../../models/department'),
@@ -17,54 +18,38 @@ router.post('/commands/task', async (req, res) => {
     let msg;
     let attachmentMsg;
     if (toId && toId[1] == '@') { // Employee
-        const slackId = toId.substring(params[0].indexOf('@') + 1, params[0].indexOf('|'));
-        const toEmployee = await EmployeeModel.findOne({ slackId: slackId });
+        if (amount && comment && comment.length <= conf.general.kudosCommentMaxLen) {
+            const slackId = toId.substring(params[0].indexOf('@') + 1, params[0].indexOf('|'));
+            const toEmployee = await EmployeeModel.findOne({ slackId: slackId });
 
-        if (toEmployee && amount) {
-            msg = 'Successfully sent task request to *' + (toEmployee.realName ? toEmployee.realName : toEmployee.name) + '*';
-            attachmentMsg = 'The reward for completing this task is *' + amount + '* kudos!';
-
-            const task = {
-                state: 'open',
-                assignedBy: from._id,
-                offeredTo: [ toEmployee._id ],
-                kudosReward: amount,
-                comment: comment,
-                date: new Date().getTime()
-            };
+            if (toEmployee) {
+                msg = 'Successfully sent task request to *' + (toEmployee.realName ? toEmployee.realName : toEmployee.name) + '*';
+                attachmentMsg = 'The reward for completing this task is *' + amount + '* kudos!';
     
-            await TaskModel.create(task);
+                const task = {
+                    state: 'open',
+                    assignedBy: from._id,
+                    offeredTo: [ toEmployee._id ],
+                    kudosReward: amount,
+                    comment: comment,
+                    date: new Date().getTime()
+                };
+        
+                await TaskModel.create(task);
+            }
+            else {
+                msg = 'Could not send task request'
+                attachmentMsg = 'The user you are trying to send kudos to might not exist.';
+            }
         }
         else {
             msg = 'Could not send task request'
-            attachmentMsg = 'The user might not exist?';
+            attachmentMsg = 'You might have entered an invalid kudos amount or the comment was too long (max *' + conf.general.kudosCommentMaxLen + '* characters)!';
         }
     }
     else { // TODO: Department
         
     }
-    // let msg;
-    // let attachmentMsg;
-    // if (from && to) {
-    //     msg = 'Asking ' + to. + ' kudos to ' + (to.realName ? to.realName : to.name) + ': ' + comment;
-    //     attachmentMsg = 'You can give away *' + (from.kudosToGive - amount) + '* more kudos!';
-
-    //     const kudosTx = {
-    //         from: from._id,
-    //         to: to._id,
-    //         amount: amount,
-    //         comment: comment,
-    //         date: new Date().getTime()
-    //     };
-
-    //     await KudosTxModel.create(kudosTx);
-    //     await EmployeeModel.findByIdAndUpdate(from._id, { kudosToGive: from.kudosToGive - amount });
-    //     await EmployeeModel.findByIdAndUpdate(to._id, { receivedKudos: to.receivedKudos + amount, availableKudos: to.availableKudos + amount });
-    // }
-    // else {
-    //     msg = 'There was a problem sending kudos.';
-    //     attachmentMsg = 'The user you are trying to send kudos to might not exist?';
-    // }
 
     res.json({
         'text': msg,
