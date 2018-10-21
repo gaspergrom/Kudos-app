@@ -18,7 +18,7 @@ router.post('/commands/kudos', async (req, res) => {
     let attachmentMsg;
     if (from && to && amount && amount.constructor == Number) {
         if (from.kudosToGive >= amount) {
-            msg = 'Sending ' + amount + ' kudos to ' + (to.realName ? to.realName : to.name) + ': ' + comment;
+            msg = 'Sending *' + amount + '* kudos to *' + (to.realName ? to.realName : to.name) + '*: ' + comment;
             attachmentMsg = 'You can give away *' + (from.kudosToGive - amount) + '* more kudos!';
 
             const kudosTx = {

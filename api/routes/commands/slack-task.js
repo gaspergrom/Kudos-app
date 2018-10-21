@@ -20,9 +20,9 @@ router.post('/commands/task', async (req, res) => {
         const slackId = toId.substring(params[0].indexOf('@') + 1, params[0].indexOf('|'));
         const toEmployee = await EmployeeModel.findOne({ slackId: slackId });
 
-        if (toEmployee) {
-            msg = 'Successfully sent task request to ' + toEmployee.realName ? toEmployee.realName : toEmployee.name;
-            attachmentMsg = 'The reward for completing this task is ' + amount + ' kudos!';
+        if (toEmployee && amount) {
+            msg = 'Successfully sent task request to *' + (toEmployee.realName ? toEmployee.realName : toEmployee.name) + '*';
+            attachmentMsg = 'The reward for completing this task is *' + amount + '* kudos!';
 
             const task = {
                 state: 'open',
