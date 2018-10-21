@@ -7,6 +7,8 @@ import ActivityModule from './modules/activity';
 import PermissionsModule from './modules/permissions';
 import ShopModule from './modules/shop';
 import TasksModule from './modules/tasks';
+import RedeemModule from './modules/redeem';
+
 
 const createStore = () => {
     return new Vuex.Store({
@@ -19,6 +21,7 @@ const createStore = () => {
             permissions: PermissionsModule,
             shop: ShopModule,
             tasks: TasksModule,
+            redeem: RedeemModule,
         }
     })
 };

@@ -6,7 +6,7 @@
                 <div class="c-card height100 width100">
                     <div class="u-text-center">
                         <div class="c-avatar c-avatar--large u-mb-small u-inline-flex">
-                            <img class="c-avatar__img" src="http://via.placeholder.com/72" alt="Avatar">
+                            <img class="c-avatar__img" v-if="user.imgPaths" :src="user.imgPaths.image_192" alt="Avatar">
                         </div>
 
                         <h5>{{user.realName || user.name }}</h5>
