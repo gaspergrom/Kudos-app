@@ -62,7 +62,7 @@
                 }
                 this.invalid = false;
                 let form = this.add;
-                this.$axios.post("/json", form)
+                this.$axios.post(`/company/${$store.state.auth.teamId}/json`, form)
                     .then((res) => {
                         console.log(res);
                         this.$v.$reset();

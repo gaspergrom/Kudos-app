@@ -8,7 +8,7 @@
                 <div class="modal-content">
                     <div class="c-card u-p-medium u-mh-auto" style="max-width:500px;">
                         <h3 class="u-mb-small">Add new department</h3>
-                        <form @submit="addDepartment">
+                        <form @submit.prevent="addDepartment">
                             <div class="c-field u-mb-small">
                                 <input class="c-input" type="text" v-model="add.title"
                                        @blur="$v.add.title.$touch()"
@@ -25,6 +25,9 @@
                                         @blur="$v.add.manager.$touch()"
                                         :class="{'c-input--danger': $v.add.manager.$error}">
                                     <option value="" style="display: none" disabled selected>Select manager
+                                    </option>
+                                    <option :value="$store.state.auth.userId">
+                                        {{$store.state.user.name}}
                                     </option>
                                     <option :value="employee._id"
                                             v-for="employee of $store.state.companies.employees">
@@ -85,9 +88,10 @@
                 }
                 this.invalid = false;
                 let form = this.add;
-                this.$axios.post(`/company/${$store.state.auth.teamId}/departments`, form)
+                this.$axios.post(`/companies/${this.$store.state.auth.teamId}/departments`, form)
                     .then((res) => {
                         console.log("POST::DEPARTMENT", res);
+                        this.$store.state.companies.departments=res.data.departments;
                         this.$v.$reset();
                         this.add = {
                             open: false,

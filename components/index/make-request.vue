@@ -10,7 +10,7 @@
                                 :class="{'c-input--danger': $v.form.department.$error}">
                             <option value="" style="display: none" disabled selected>Select department</option>
                             <option :value="department._id" v-for="department of $store.state.companies.departments">
-                                {{department}}
+                                {{department.title}}
                             </option>
                         </select>
                         <small class="c-field__message  u-color-danger"
@@ -43,7 +43,7 @@
                 </div>
                 <div class="col-md-5">
                     <div class="c-field u-mb-xsmall">
-                        <input class="c-input" v-model="form.message" type="text" @blur="$v.form.comment.$touch()"
+                        <input class="c-input" v-model="form.comment" type="text" @blur="$v.form.comment.$touch()"
                                placeholder="Message" :class="{'c-input--danger': $v.form.comment.$error}">
                         <small class="c-field__message  u-color-danger"
                                v-if="$v.form.comment.$dirty && !$v.form.comment.required">

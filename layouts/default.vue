@@ -35,6 +35,7 @@
                             this.$store.state.companies.name = res.data.title;
                             this.$store.state.companies.slug = res.data.slug;
                             this.$store.state.companies.departments = res.data.departments;
+                            console.log("works", res.data.departments);
                             this.$axios.get(`/companies/${res.data._id}/employees`)
                                 .then((res) => {
                                     this.$store.state.companies.employees = res.data.filter((value) => {
@@ -53,7 +54,7 @@
                         .then((res) => {
                             console.log(res);
                             this.$store.state.user.name = res.data.name;
-                            this.$store.state.user.picture = res.data.imgPaths;
+                            this.$store.state.user.picture = res.data.imgPaths.image_192;
                             this.$store.state.user.availableKudos = res.data.availableKudos;
                             this.$store.state.user.kudosToGive = res.data.kudosToGive;
                             this.$store.state.user.receivedKudos = res.data.receivedKudos;

@@ -18,6 +18,20 @@
             <div class="col-md-12" v-if="$store.state.companies.employees.length===0">
                 <h2 class="text-center pb20">No members</h2>
             </div>
+            <div class="col-sm-6 col-xl-3" v-if="$store.state.user.name.toLowerCase().includes(search.toLowerCase())">
+
+                <nuxt-link :to="`/user`" class="c-card is-animated u-text-center" style="display: block;">
+                    <div class="c-avatar u-inline-flex u-mb-small">
+                        <img class="c-avatar__img" :src="$store.state.user.picture" alt="Clark">
+                    </div>
+                    <h4>{{$store.state.user.name}}</h4>
+                    <p class="u-pb-small u-mb-small u-border-bottom"></p>
+
+                    <p class="u-h4">
+                        {{$store.state.user.receivedKudos}} kudos
+                    </p>
+                </nuxt-link>
+            </div>
             <div class="col-sm-6 col-xl-3" v-for="member of members">
 
                 <nuxt-link :to="`/user/${member._id}`" class="c-card is-animated u-text-center" style="display: block;">
@@ -25,7 +39,7 @@
                         <img class="c-avatar__img" :src="member.imgPaths.image_72" alt="Clark">
                     </div>
                     <h4>{{member.realName}}</h4>
-                    <p class="u-pb-small u-mb-small u-border-bottom">{{member.departments[0]?member.departments[0]:"Employee"}}</p>
+                    <p class="u-pb-small u-mb-small u-border-bottom"></p>
 
                     <p class="u-h4">
                         {{member.receivedKudos}} kudos

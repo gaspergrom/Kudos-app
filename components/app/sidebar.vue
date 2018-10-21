@@ -25,12 +25,17 @@
                 </li>
                 <li>
                     <nuxt-link class="c-sidebar__link" to="/statistics" active-class="is-active" exact>
-                        <i class="c-sidebar__icon feather icon-bar-chart-2"></i>Statistics
+                        <i class="c-sidebar__icon feather icon-bar-chart-2"></i>Statisticss
                     </nuxt-link>
                 </li>
                 <li>
                     <nuxt-link class="c-sidebar__link" to="/shop" active-class="is-active" exact>
                         <i class="c-sidebar__icon feather icon-shopping-cart"></i>Gift shop
+                    </nuxt-link>
+                </li>
+                <li>
+                    <nuxt-link class="c-sidebar__link" to="/shop/redeems" active-class="is-active" exact>
+                        <i class="c-sidebar__icon feather icon-credit-card"></i>Redeems
                     </nuxt-link>
                 </li>
                 <li>
@@ -52,10 +57,10 @@
                         <i class="c-sidebar__icon feather icon-bookmark"></i>Departments
                     </nuxt-link>
                 </li>
-                <li v-for="(department, slug) of $store.state.companies.departments">
+                <li v-for="department of $store.state.companies.departments">
                     <nuxt-link class="c-sidebar__link" :to="`/company/department/${department.slug}`"
                                active-class="is-active" exact>
-                        <i class="c-sidebar__icon feather icon-user"></i>{{department.name}}
+                        <i class="c-sidebar__icon feather icon-user"></i>{{department.title}}
                     </nuxt-link>
                 </li>
 
@@ -70,7 +75,12 @@
 
 <script>
     export default {
-        name: "app-sidebar"
+        name: "app-sidebar",
+        data: function () {
+            return {
+                statistics: false,
+            }
+        }
     }
 </script>
 
